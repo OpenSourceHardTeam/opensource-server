@@ -31,7 +31,7 @@ jobs:
 
         touch ./application.yml
 
-        echo "${{ secrets.SOPT_APPLICATION }}" >> ./application.yml
+        echo "${{ secrets.OPENSOURCE_APPLICATION }}" >> ./application.yml
         
         cat ./application.yml
       shell: bash
@@ -66,7 +66,7 @@ jobs:
         aws-region: ap-northeast-2
         
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./sopt_server.zip s3://$S3_BUCKET_NAME/
+      run: aws s3 cp --region ap-northeast-2 ./opensource-movie.zip s3://$S3_BUCKET_NAME/
       
     - name: Deploy
       env:
