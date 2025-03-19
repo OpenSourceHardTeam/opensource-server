@@ -55,7 +55,7 @@ jobs:
       run: cp ./scripts/*.sh ./deploy
       
     - name: Make zip file
-      run: zip -r ./sopt_server.zip ./deploy
+      run: zip -r ./opensource-movie.zip ./deploy
       shell: bash
       
     - name: Configure AWS credentials
