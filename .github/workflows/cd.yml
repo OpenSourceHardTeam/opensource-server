@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 env:
-  S3_BUCKET_NAME: opensource-movie
+  S3_BUCKET_NAME: opensource-booking
 
 jobs:
   build:
@@ -54,7 +54,7 @@ jobs:
       run: cp ./scripts/*.sh ./deploy
       
     - name: Make zip file
-      run: zip -r ./opensource-movie.zip ./deploy
+      run: zip -r ./opensource-booking.zip ./deploy
       shell: bash
       
     - name: Configure AWS credentials
@@ -65,7 +65,7 @@ jobs:
         aws-region: ap-northeast-2
         
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./opensource-movie.zip s3://$S3_BUCKET_NAME/
+      run: aws s3 cp --region ap-northeast-2 ./opensource-booking.zip s3://$S3_BUCKET_NAME/
       
     - name: Deploy
       env:
@@ -73,8 +73,8 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
       run:
         aws deploy create-deployment 
-        --application-name opensource-movie-codedeploy
-        --deployment-group-name opensource-movie-codedeploy-group
+        --application-name opensource-booking-codedeploy
+        --deployment-group-name opensource-booking-codedeploy-group
         --file-exists-behavior OVERWRITE 
-        --s3-location bucket=opensource-movie,bundleType=zip,key=opensource-movie.zip
+        --s3-location bucket=opensource-booking,bundleType=zip,key=opensource-booking.zip
         --region ap-northeast-2
