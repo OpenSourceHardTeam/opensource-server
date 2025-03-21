@@ -15,11 +15,3 @@ project(':module-external-api') {
         testImplementation 'org.springframework.security:spring-security-test'
     }
 }
-
-tasks.bootJar {
-    enabled = false
-}
-
-tasks.jar {
-    enabled = true
-}

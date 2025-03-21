@@ -25,11 +25,3 @@ project(':module-application') {
         implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
     }
 }
-
-tasks.bootJar {
-    enabled = true
-}
-
-tasks.jar {
-    enabled = false
-}
