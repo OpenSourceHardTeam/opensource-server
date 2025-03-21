@@ -4,11 +4,3 @@ project(':module-infra') {
         implementation project(':module-domain')
     }
 }
-
-tasks.bootJar {
-    enabled = false
-}
-
-tasks.jar {
-    enabled = true
-}
