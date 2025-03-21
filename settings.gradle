@@ -1,1 +1,7 @@
 rootProject.name = 'movie'
+
+include 'module-application'
+include 'module-common'
+include 'module-infra'
+include 'module-domain'
+include 'module-external-api'
