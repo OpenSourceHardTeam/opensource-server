@@ -4,45 +4,43 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'org.opensource'
-version = '0.0.1-SNAPSHOT'
+allprojects {
+	group = "org.opensource"
+	version = "0.0.1-SNAPSHOT"
+	sourceCompatibility = JavaVersion.VERSION_21
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+	repositories {
+		mavenCentral()
 	}
 }
 
-repositories {
-	mavenCentral()
-}
+tasks.bootJar { enabled = false }
+tasks.jar { enabled = true }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+// 모든 하위 모듈들에 이 설정을 적용합니다.
+subprojects {
+	apply {
+		plugin 'java'
+		plugin 'org.springframework.boot'
+		plugin 'io.spring.dependency-management'
+		plugin 'application'
+	}
 
-	// sql
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'mysql:mysql-connector-java:8.0.32'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	dependencies {
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testImplementation 'org.springframework.security:spring-security-test'
 
-	// Health check
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+		// lombok
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testAnnotationProcessor 'org.projectlombok:lombok'
+		testCompileOnly 'org.projectlombok:lombok'
 
-	// JWT
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+		// validation
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
+	}
 
-	// S3 AWS
-	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
-
-	// swagger
-	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
 }
