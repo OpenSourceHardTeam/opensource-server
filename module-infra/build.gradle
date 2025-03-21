@@ -1,0 +1,14 @@
+project(':module-infra') {
+    dependencies {
+        implementation project(':module-common')
+        implementation project(':module-domain')
+    }
+}
+
+tasks.bootJar {
+    enabled = false
+}
+
+tasks.jar {
+    enabled = true
+}
