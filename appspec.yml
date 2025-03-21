@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 
 files:
-  - source:  /
+  - source:  /module-application.jar
     destination: /home/ubuntu/app
     overwrite: yes
 
