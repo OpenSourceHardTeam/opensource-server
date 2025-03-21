@@ -1,3 +1,8 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot'
+}
+
 project(':module-application') {
     dependencies {
         implementation project(':module-common')
