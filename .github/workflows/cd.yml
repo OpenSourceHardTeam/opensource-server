@@ -18,22 +18,21 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3
     
-    - name: Set up JDK 17
+    - name: Set up JDK 21
       uses: actions/setup-java@v3
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'temurin'
     
-    - name: make application.properties 파일 생성
+    - name: application-secret.yml 파일 생성
       run: |
-        mkdir ./src/main/resources
-        cd ./src/main/resources
+        cd ./module-application/src/main/resources/yml
 
-        touch ./application.yml
+        touch ./application-secret.yml
 
-        echo "${{ secrets.OPENSOURCE_APPLICATION }}" >> ./application.yml
+        echo "${{ secrets.OPENSOURCE_APPLICATION }}" >> ./application-secret.yml
         
-        cat ./application.yml
+        cat ./application-secret.yml
       shell: bash
         
     - name: Grant execute permission for gradlew
