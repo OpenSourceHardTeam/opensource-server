@@ -2,7 +2,7 @@ name: opensource CD
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ main ]
 
 env:
   S3_BUCKET_NAME: opensource-movie
