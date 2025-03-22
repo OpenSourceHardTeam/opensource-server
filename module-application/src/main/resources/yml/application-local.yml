@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/book_local?useSSL=true&useUnicode=true&serverTimezone=Asia/Seoul
+    username: opensource
+    password: opensource1234
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
