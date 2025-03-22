@@ -1,8 +1,10 @@
 spring:
-  application:
-    name: booking-application
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/booking
-    username: canwebook
-    password: qwer1234
-    driver-class-name: org.h2.Driver
+  config:
+    import:
+      - classpath:/yml/application-dev.yml
+      - classpath:/yml/application-local.yml
+      - classpath:/yml/application-log.yml
+  profiles:
+    group:
+      logging: dev, log
+    active: logging
