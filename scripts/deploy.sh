@@ -1,6 +1,6 @@
 #!/bin/bash
 BASE_PATH=/var/www
-BUILD_PATH=$(ls $BASE_PATH/opensource/build/libs/movie-0.0.1-SNAPSHOT.jar)
+BUILD_PATH=$(ls $BASE_PATH/opensource/build/libs/booking-0.0.1-SNAPSHOT.jar)
 #BUILD_PATH=$(ls $DEPLOY_PATH/module-application*.jar)
 JAR_NAME=$(basename $BUILD_PATH)
 echo "> build 파일명: $JAR_NAME"
