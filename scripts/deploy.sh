@@ -1,6 +1,5 @@
 #!/bin/bash
-BASE_PATH=/var/www
-BUILD_PATH=$(ls /home/ubuntu/app/booking-0.0.1-SNAPSHOT.jar)
+BUILD_PATH=$(ls /home/ubuntu/app/module-application-0.0.1-SNAPSHOT.jar)
 JAR_NAME=$(basename $BUILD_PATH)
 echo "> build 파일명: $JAR_NAME"
 
