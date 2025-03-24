@@ -1,7 +1,7 @@
 project(':module-external-api') {
     dependencies {
         implementation project(':module-common')
-        implementation project(':module-infra')
+        implementation project(':module-infra:persistence-database')
 
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-validation'

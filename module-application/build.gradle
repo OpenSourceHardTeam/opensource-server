@@ -8,7 +8,7 @@ project(':module-application') {
         implementation project(':module-common')
         implementation project(':module-domain')
         implementation project(':module-external-api')
-        implementation project(':module-infra')
+        implementation project(':module-infra:persistence-database')
 
         implementation 'org.springframework.boot:spring-boot-starter-web'
 

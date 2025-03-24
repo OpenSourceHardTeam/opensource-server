@@ -5,3 +5,8 @@ include 'module-common'
 include 'module-infra'
 include 'module-domain'
 include 'module-external-api'
+include 'module-infra:persistence-database'
+findProject(':module-infra:persistence-database')?.name = 'persistence-database'
+include 'module-infra:persistence-redis'
+findProject(':module-infra:persistence-redis')?.name = 'persistence-redis'
+
