@@ -45,7 +45,7 @@ jobs:
       run: mkdir -p deploy
       
     - name: Copy Jar
-      run: cp ./build/libs/*.jar ./deploy
+      run: cp ./module-application/build/libs/module-application-0.0.1-SNAPSHOT.jar ./deploy
     
     - name: Copy appspec.yml
       run: cp appspec.yml ./deploy
