@@ -54,4 +54,4 @@ jobs:
       run: chmod +x gradlew
       
     - name: Build with Gradle 
-      run: ./gradlew build -x test
+      run: ./gradlew :module-application:build -x test
