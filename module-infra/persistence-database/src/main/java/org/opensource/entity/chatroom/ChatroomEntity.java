@@ -5,15 +5,17 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.opensource.chatroom.domain.Chatroom;
+import org.opensource.chatroom.domain.ChatroomType;
 import org.opensource.entity.base.BaseTimeEntity;
-import org.opensource.entity.book.Book;
+import org.opensource.entity.book.BookEntity;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Chatroom extends BaseTimeEntity {
+public class ChatroomEntity extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chatroom_id")
@@ -34,7 +36,7 @@ public class Chatroom extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
-    private Book book;
+    private BookEntity book;
 
     @Column(name = "total_participants", nullable = false)
     private int totalParticipants;
@@ -53,12 +55,13 @@ public class Chatroom extends BaseTimeEntity {
     @Column boolean isArchived = false;
 
     @Builder
-    public Chatroom(
+    public ChatroomEntity(
+            Long id,
             String externalRoomId,
             String name,
             ChatroomType type,
             String topic,
-            Book book,
+            BookEntity book,
             int totalParticipants,
             String password,
             LocalDateTime expiryDate,
@@ -66,6 +69,7 @@ public class Chatroom extends BaseTimeEntity {
             int currentParticipants,
             int messageCount,
             boolean isArchived) {
+        this.id = id;
         this.externalRoomId = externalRoomId;
         this.name = name;
         this.type = type;
@@ -80,5 +84,41 @@ public class Chatroom extends BaseTimeEntity {
         this.isArchived = isArchived;
     }
 
-    // Entity business logics
+    // Chatroom domain to ChatroomEntity
+    public static ChatroomEntity from(Chatroom chatroom) {
+        return builder()
+                .id(chatroom.getId())
+                .externalRoomId(chatroom.getExternalRoomId())
+                .name(chatroom.getName())
+                .type(chatroom.getType())
+                .topic(chatroom.getTopic())
+                .book(BookEntity.from(chatroom.getBook()))
+                .totalParticipants(chatroom.getTotalParticipants())
+                .password(chatroom.getPassword())
+                .expiryDate(chatroom.getExpiryDate())
+                .messageSequence(chatroom.getMessageSequence())
+                .currentParticipants(chatroom.getCurrentParticipants())
+                .messageCount(chatroom.getMessageCount())
+                .isArchived(chatroom.isArchived())
+                .build();
+    }
+
+    // ChatroomEntity to Chatroom domain
+    public Chatroom toModel() {
+        return Chatroom.builder()
+                .id(id)
+                .externalRoomId(externalRoomId)
+                .name(name)
+                .type(type)
+                .topic(topic)
+                .book(this.book.toModel())
+                .totalParticipants(totalParticipants)
+                .password(password)
+                .expiryDate(expiryDate)
+                .messageSequence(messageSequence)
+                .currentParticipants(currentParticipants)
+                .messageCount(messageCount)
+                .isArchived(isArchived)
+                .build();
+    }
 }
