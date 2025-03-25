@@ -1,4 +1,4 @@
-package org.opensource.entity.chatroom;
+package org.opensource.chatroom.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.opensource.chatroom.domain.Chatroom;
 import org.opensource.chatroom.domain.ChatroomType;
-import org.opensource.entity.base.BaseTimeEntity;
-import org.opensource.entity.book.BookEntity;
+import org.opensource.BaseTimeEntity;
+import org.opensource.book.entity.BookEntity;
 
 import java.time.LocalDateTime;
 

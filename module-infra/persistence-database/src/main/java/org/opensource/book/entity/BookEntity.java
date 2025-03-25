@@ -1,4 +1,4 @@
-package org.opensource.entity.book;
+package org.opensource.book.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class Book {
-    
+
     private long id;
 
     @Builder
