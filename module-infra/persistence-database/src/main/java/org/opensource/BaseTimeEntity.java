@@ -1,4 +1,4 @@
-package org.opensource.entity.base;
+package org.opensource;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
