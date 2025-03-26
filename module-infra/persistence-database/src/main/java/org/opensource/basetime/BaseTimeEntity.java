@@ -1,4 +1,4 @@
-package org.opensource;
+package org.opensource.basetime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
