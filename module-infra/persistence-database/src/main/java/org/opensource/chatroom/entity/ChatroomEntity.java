@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.opensource.chatroom.domain.Chatroom;
 import org.opensource.chatroom.domain.ChatroomType;
-import org.opensource.BaseTimeEntity;
+import org.opensource.basetime.BaseTimeEntity;
 import org.opensource.book.entity.BookEntity;
 
 import java.time.LocalDateTime;
