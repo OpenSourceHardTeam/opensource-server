@@ -20,7 +20,7 @@ public class MessageEntity {
     private ChatroomEntity chatroom;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uesr_id")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     private String content;
