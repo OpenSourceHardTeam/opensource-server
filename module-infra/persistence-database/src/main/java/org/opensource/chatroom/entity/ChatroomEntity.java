@@ -18,7 +18,7 @@ public class ChatroomEntity extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chatroom_id")
-    private long id;
+    private Long id;
 
     @Column(name = "external_room_id", nullable = false)
     private String externalRoomId;
@@ -44,7 +44,7 @@ public class ChatroomEntity extends BaseTimeEntity {
     @Column boolean isArchived = false;
 
     @Builder
-    public ChatroomEntity(
+    private ChatroomEntity(
             Long id,
             String externalRoomId,
             String topic,
@@ -65,7 +65,6 @@ public class ChatroomEntity extends BaseTimeEntity {
         this.isArchived = isArchived;
     }
 
-    // Chatroom domain to ChatroomEntity
     public static ChatroomEntity from(Chatroom chatroom) {
         return builder()
                 .id(chatroom.getId())
@@ -80,7 +79,6 @@ public class ChatroomEntity extends BaseTimeEntity {
                 .build();
     }
 
-    // ChatroomEntity to Chatroom domain
     public Chatroom toModel() {
         return Chatroom.builder()
                 .id(id)
