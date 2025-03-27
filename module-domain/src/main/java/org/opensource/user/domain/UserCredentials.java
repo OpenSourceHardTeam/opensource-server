@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class UserCredentials {
-    private long id;
+    private Long id;
     private User user;
     private String password;
     private LoginType loginType;
