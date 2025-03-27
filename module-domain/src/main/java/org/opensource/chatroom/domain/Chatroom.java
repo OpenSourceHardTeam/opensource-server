@@ -37,7 +37,6 @@ public class Chatroom {
         this.topic = topic;
         this.book = book;
         this.totalParticipants = totalParticipants;
-
         this.messageSequence = messageSequence;
         this.currentParticipants = currentParticipants;
         this.messageCount = messageCount;
