@@ -33,7 +33,7 @@ public class UserCredentialsEntity {
     private String refreshToken;
 
     @Builder
-    public UserCredentialsEntity(
+    private UserCredentialsEntity(
             Long id,
             UserEntity user,
             String userName,
@@ -52,7 +52,7 @@ public class UserCredentialsEntity {
         return builder()
                 .id(userCredentials.getId())
                 .user(UserEntity.from(userCredentials.getUser()))
-                .userName(userCredentials.getUser().getUserName())
+                .userName(userCredentials.getUser().getName())
                 .password(userCredentials.getPassword())
                 .loginType(userCredentials.getLoginType())
                 .refreshToken(userCredentials.getRefreshToken())

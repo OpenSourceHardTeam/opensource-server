@@ -6,13 +6,13 @@ import lombok.Getter;
 @Getter
 public class User {
     private long id;
-    private String userName;
+    private String name;
 
     @Builder
     public User(
             long id,
-            String userName) {
+            String name) {
         this.id = id;
-        this.userName = userName;
+        this.name = name;
     }
 }

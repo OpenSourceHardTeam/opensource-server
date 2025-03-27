@@ -15,24 +15,24 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "name")
+    private String name;
 
     @Builder
-    public UserEntity(String userName) {
-        this.userName = userName;
+    private UserEntity(String userName) {
+        this.name = userName;
     }
 
     public static UserEntity from(User user) {
         return builder()
-                .userName(user.getUserName())
+                .userName(user.getName())
                 .build();
     }
 
     public User toModel() {
         return User.builder()
                 .id(this.id)
-                .userName(this.userName)
+                .name(this.name)
                 .build();
     }
 }
