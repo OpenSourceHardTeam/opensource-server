@@ -15,6 +15,11 @@ public class ChatroomRepository implements ChatroomPersistencePort {
     private final ChatroomJpaRepository chatroomJpaRepository;
 
     @Override
+    public Long save(Chatroom chatroom) {
+        return chatroomJpaRepository.save(ChatroomEntity.from(chatroom)).getId();
+    }
+
+    @Override
     public Optional<Chatroom> findById(Long id) {
         return chatroomJpaRepository.findById(id).map(ChatroomEntity::toModel);
     }

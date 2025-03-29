@@ -26,8 +26,7 @@ public class UserChatroomRepository implements UserChatroomPersistencePort {
 
     @Override
     public Long save(UserChatroom userChatRoom) {
-        return userChatroomJpaRepository.save(UserChatroomEntity.from(userChatRoom))
-                .toModel().getId();
+        return userChatroomJpaRepository.save(UserChatroomEntity.from(userChatRoom)).getId();
     }
 
     @Override
