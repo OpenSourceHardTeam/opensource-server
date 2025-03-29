@@ -1,7 +1,5 @@
 package org.opensource.userchatroom.repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.opensource.chatroom.domain.Chatroom;
 import org.opensource.chatroom.entity.ChatroomEntity;
@@ -18,9 +16,6 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class UserChatroomRepository implements UserChatroomPersistencePort {
-
-    @PersistenceContext
-    private EntityManager em;
 
     private final UserChatroomJpaRepository userChatroomJpaRepository;
 
