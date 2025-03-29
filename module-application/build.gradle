@@ -7,6 +7,8 @@ project(':module-application') {
         implementation project(':module-domain')
         implementation project(':module-external-api')
         implementation project(':module-infra:persistence-database')
+        implementation project(':module-infra:persistence-redis')
+        implementation project(':module-infra:security')
 
         implementation 'org.springframework.boot:spring-boot-starter-web'
 
@@ -18,12 +20,6 @@ project(':module-application') {
 
         // transaction
         implementation 'org.springframework:spring-tx:6.1.10'
-
-        // security & jwt
-//        implementation 'org.springframework.boot:spring-boot-starter-security'
-        implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-        implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
-        implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
         /* Swagger */
         implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
