@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.opensource.chatroom.entity.ChatroomEntity;
+import org.opensource.user.entity.UserEntity;
 import org.opensource.userchatroom.domain.UserChatroom;
 
 @Entity
@@ -18,7 +19,9 @@ public class UserChatroomEntity {
     @Column(name = "user_chatroom_id")
     private Integer id;
 
-//    private UserEntity user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatroom_id")
@@ -27,13 +30,15 @@ public class UserChatroomEntity {
     private Boolean isOnline;
 
     @Builder
-    private UserChatroomEntity(ChatroomEntity chatroom, Boolean isOnline) {
+    private UserChatroomEntity(UserEntity user, ChatroomEntity chatroom, Boolean isOnline) {
+        this.user = user;
         this.chatroom = chatroom;
         this.isOnline = isOnline;
     }
 
-    public static UserChatroomEntity create(UserChatroom userChatroom) {
+    public static UserChatroomEntity from(UserChatroom userChatroom) {
         return builder().
+                user(UserEntity.from(userChatroom.getUser())).
                 chatroom(ChatroomEntity.from(userChatroom.getChatroom())).
                 isOnline(userChatroom.getIsOnline()).
                 build();
@@ -41,6 +46,7 @@ public class UserChatroomEntity {
 
     public UserChatroom toModel() {
         return UserChatroom.builder()
+                .user(user.toModel())
                 .chatroom(chatroom.toModel())
                 .isOnline(isOnline)
                 .build();
