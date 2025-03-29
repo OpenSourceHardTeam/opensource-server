@@ -13,6 +13,7 @@ import org.opensource.user.domain.User;
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @Column(name = "name")
