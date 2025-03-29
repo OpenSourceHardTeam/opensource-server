@@ -22,5 +22,5 @@ public interface UserChatroomPersistencePort {
     // 특정 유저가 특정 채팅방에 참여 여부 확인
     boolean existsByUserAndChatRoom(User user, Chatroom chatRoom);
 
-    void delete(UserChatroom userChatRoom);
+    void deleteById(Long id);
 }

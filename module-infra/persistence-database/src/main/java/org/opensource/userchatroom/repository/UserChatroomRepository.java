@@ -1,11 +1,12 @@
 package org.opensource.userchatroom.repository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.opensource.chatroom.domain.Chatroom;
+import org.opensource.chatroom.entity.ChatroomEntity;
 import org.opensource.user.domain.User;
+import org.opensource.user.entity.UserEntity;
 import org.opensource.userchatroom.domain.UserChatroom;
 import org.opensource.userchatroom.entity.UserChatroomEntity;
 import org.opensource.userchatroom.port.out.persistence.UserChatroomPersistencePort;
@@ -31,39 +32,43 @@ public class UserChatroomRepository implements UserChatroomPersistencePort {
 
     @Override
     public Optional<UserChatroom> findByUserAndChatRoom(User user, Chatroom chatRoom) {
-        try {
-            UserChatroomEntity userChatRoom = (UserChatroomEntity) em.createQuery(
-                            "select uc from UserChatroomEntity uc" +
-                                    " join fetch uc.user" +
-                                    " join fetch uc.chatroom" +
-                                    " where uc.user = :user and uc.chatroom = :chatroom")
-                    .setParameter("user", user)
-                    .setParameter("chatroom", chatRoom)
-                    .getSingleResult();
+        UserEntity userEntity = UserEntity.from(user);
+        ChatroomEntity chatroomEntity = ChatroomEntity.from(chatRoom);
 
-            return Optional.of(userChatRoom);
-        } catch (NoResultException e) {
-            return Optional.empty(); // 결과가 없을 때는 Optional.empty() 반환
-        }
+        return userChatroomJpaRepository.findByUserAndChatroomFetch(userEntity, chatroomEntity)
+                .map(UserChatroomEntity::toModel);
     }
 
     @Override
     public List<UserChatroom> findByUser(User user) {
-        return List.of();
+        UserEntity userEntity = UserEntity.from(user);
+
+        return userChatroomJpaRepository.findByUserWithFetch(userEntity)
+                .stream()
+                .map(UserChatroomEntity::toModel)
+                .toList();
     }
 
     @Override
     public List<UserChatroom> findByChatRoom(Chatroom chatRoom) {
-        return List.of();
+        ChatroomEntity chatroomEntity = ChatroomEntity.from(chatRoom);
+
+        return userChatroomJpaRepository.findByChatroomWithFetch(chatroomEntity)
+                .stream()
+                .map(UserChatroomEntity::toModel)
+                .toList();
     }
 
     @Override
     public boolean existsByUserAndChatRoom(User user, Chatroom chatRoom) {
-        return false;
+        UserEntity userEntity = UserEntity.from(user);
+        ChatroomEntity chatroomEntity = ChatroomEntity.from(chatRoom);
+
+        return userChatroomJpaRepository.existsByUserAndChatRoom(userEntity, chatroomEntity);
     }
 
     @Override
-    public void delete(UserChatroom userChatRoom) {
-
+    public void deleteById(Long id) {
+        userChatroomJpaRepository.deleteById(id);
     }
 }
