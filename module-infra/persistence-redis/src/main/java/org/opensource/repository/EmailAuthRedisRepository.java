@@ -18,7 +18,7 @@ public class EmailAuthRedisRepository implements EmailAuthPersistencePort {
     public void setData(EmailAuthCommand command) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         Duration expireDuration = Duration.ofSeconds(command.duration());
-        valueOperations.set(command.email(), command.authToken(), expireDuration);
+        valueOperations.set(command.email(), command.authCode(), expireDuration);
     }
 
     @Override
