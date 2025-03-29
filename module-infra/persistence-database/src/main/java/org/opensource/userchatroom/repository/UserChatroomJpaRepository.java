@@ -14,14 +14,6 @@ public interface UserChatroomJpaRepository extends JpaRepository<UserChatroomEnt
 
     @Query("select uc from UserChatroomEntity uc" +
             " join fetch uc.user" +
-            " join fetch uc.chatroom" +
-            " where uc.user = :user and uc.chatroom = :chatroom")
-    Optional<UserChatroomEntity> findByUserAndChatroomFetch(
-            @Param("user") UserEntity user,
-            @Param("chatroom") ChatroomEntity chatroom);
-
-    @Query("select uc from UserChatroomEntity uc" +
-            " join fetch uc.user" +
             " where uc.user = :user")
     List<UserChatroomEntity> findByUserWithFetch(@Param("user") UserEntity user);
 
@@ -29,6 +21,14 @@ public interface UserChatroomJpaRepository extends JpaRepository<UserChatroomEnt
             " join fetch uc.chatroom" +
             " where uc.chatroom = :chatroom")
     List<UserChatroomEntity> findByChatroomWithFetch(@Param("chatroom") ChatroomEntity chatroom);
+
+    @Query("select uc from UserChatroomEntity uc" +
+            " join fetch uc.user" +
+            " join fetch uc.chatroom" +
+            " where uc.user = :user and uc.chatroom = :chatroom")
+    Optional<UserChatroomEntity> findByUserAndChatroomFetch(
+            @Param("user") UserEntity user,
+            @Param("chatroom") ChatroomEntity chatroom);
 
     @Query("select case when count(uc) > 0 then true else false end" +
             " from UserChatroomEntity uc" +
