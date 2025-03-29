@@ -7,6 +7,8 @@ import java.util.Optional;
 public interface ChatroomPersistencePort {
 
     Long save(Chatroom chatroom);
+
     Optional<Chatroom> findById(Long id);
+
     void deleteById(Long id);
 }
