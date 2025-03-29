@@ -38,3 +38,5 @@ out/
 
 ### application-secret.yml ###
 **/application-secret.yml
+
+.DS_STORE
