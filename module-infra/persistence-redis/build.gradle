@@ -1,2 +1,9 @@
 bootJar { enabled = false }
 jar { enabled = true }
+
+dependencies {
+    implementation project(':module-domain')
+    implementation project(':module-common')
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+}
