@@ -20,6 +20,7 @@ public class UserChatroom {
             Chatroom chatroom,
             Boolean isOnline) {
         this.id = id;
+        this.user = user;
         this.chatroom = chatroom;
         this.isOnline = isOnline;
     }
