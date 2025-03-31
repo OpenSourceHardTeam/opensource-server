@@ -21,15 +21,19 @@ public class UserChatroomService implements UserChatroomUsecase {
 
     @Override
     public Long joinUserInChatroom(JoinUserInChatroomCommand command) {
-        User user = User.builder()
-                .id(command.userId()).build();
-        Chatroom chatroom = Chatroom.builder()
-                .id(command.chatroomId()).build();
-        UserChatroom userChatroom = UserChatroom.builder()
-                .user(user)
-                .chatroom(chatroom).build();
-
-        return userChatroomPersistencePort.save(userChatroom);
+        return userChatroomPersistencePort
+                .findByUserIdAndChatroomId(command.user().getId(), command.chatroom().getId())
+                .map(UserChatroom::getId)
+                .orElseGet(
+                        () -> {
+                            UserChatroom userChatroom = UserChatroom.builder()
+                                            .user(command.user())
+                                            .chatroom(command.chatroom())
+                                            .isOnline(command.isOnline())
+                                            .build();
+                            return userChatroomPersistencePort.save(userChatroom);
+                        }
+                );
     }
 
     @Override
