@@ -37,8 +37,12 @@ public class UserChatroomService implements UserChatroomUsecase {
     }
 
     @Override
-    public void leaveUserAtChatRoomByChatRoomId(Long chatroomId) {
+    public void leaveUsersAtChatRoomByChatRoomId(Long chatroomId) {
+        List<UserChatroom> userChatRooms = userChatroomPersistencePort.findUserListByChatRoomId(chatroomId);
 
+        for (UserChatroom userChatroom : userChatRooms) {
+            userChatroomPersistencePort.deleteById(userChatroom.getId());
+        }
     }
 
     @Override

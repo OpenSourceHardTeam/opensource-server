@@ -1,5 +1,6 @@
 package org.opensource.userchatroom.repository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.opensource.chatroom.domain.Chatroom;
 import org.opensource.chatroom.entity.ChatroomEntity;
@@ -26,7 +27,17 @@ public class UserChatroomRepository implements UserChatroomPersistencePort {
 
     @Override
     public Long save(UserChatroom userChatroom) {
-        return userChatroomJpaRepository.save(UserChatroomEntity.from(userChatroom)).getId();
+        UserEntity userEntity = findUserEntityById(userChatroom.getUser().getId());
+        ChatroomEntity chatroomEntity = findChatroomEntityById(userChatroom.getChatroom().getId());
+
+        UserChatroomEntity userChatroomEntity = UserChatroomEntity.builder()
+                .user(userEntity)
+                .chatroom(chatroomEntity).build();
+
+        // 연관관계 편의 메서드 호출
+        userEntity.addUserChatRoom(userChatroomEntity);
+
+        return userChatroomJpaRepository.save(userChatroomEntity).getId();
     }
 
     @Override
@@ -58,6 +69,15 @@ public class UserChatroomRepository implements UserChatroomPersistencePort {
 
     @Override
     public void deleteById(Long id) {
+        UserChatroomEntity userChatroomEntity = userChatroomJpaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("UserChatroom not found with id: " + id));
+
+        UserEntity userEntity = userChatroomEntity.getUser();
+        if (userEntity != null) {
+            // 연관관계 편의 메서드 호출
+            userEntity.removeUserChatRoom(userChatroomEntity);
+        }
+
         userChatroomJpaRepository.deleteById(id);
     }
 
