@@ -1,13 +1,13 @@
 package org.opensource.userchatroom.port.in.usecase;
 
-import org.opensource.chatroom.port.in.command.CreateChatroomCommand;
 import org.opensource.userchatroom.domain.UserChatroom;
+import org.opensource.userchatroom.port.in.command.JoinUserInChatroomCommand;
 
 import java.util.List;
 
 public interface UserChatroomUsecase {
 
-    Long joinUserInChatroom(CreateChatroomCommand command);
+    Long joinUserInChatroom(JoinUserInChatroomCommand command);
 
     void leaveUserAtChatRoomByChatRoomId(Long chatroomId);
 
