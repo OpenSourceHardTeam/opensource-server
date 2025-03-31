@@ -4,7 +4,7 @@ import org.opensource.userchatroom.port.in.command.JoinUserInChatroomCommand;
 
 public interface UserChatroomUsecase {
 
-    Object joinUserInChatroom(JoinUserInChatroomCommand command);
+    Long joinUserInChatroom(JoinUserInChatroomCommand command);
 
     void deleteUserAtChatRoomByChatRoomId(Long userId, Long chatroomId);
 
