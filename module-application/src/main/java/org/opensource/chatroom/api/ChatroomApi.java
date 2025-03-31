@@ -1,7 +1,7 @@
 package org.opensource.chatroom.api;
 
 import jakarta.validation.Valid;
-import org.opensource.CommonApiResult;
+import org.opensource.common.CommonApiResult;
 import org.opensource.chatroom.dto.request.CreateChatroomRequest;
 import org.opensource.chatroom.dto.response.ChatroomResponse;
 import org.opensource.chatroom.dto.response.CreateChatroomResponse;

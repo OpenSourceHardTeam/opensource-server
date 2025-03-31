@@ -1,4 +1,4 @@
-package org.opensource;
+package org.opensource.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
