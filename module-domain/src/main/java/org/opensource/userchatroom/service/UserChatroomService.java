@@ -2,7 +2,6 @@ package org.opensource.userchatroom.service;
 
 import lombok.RequiredArgsConstructor;
 
-import org.opensource.user.domain.User;
 import org.opensource.userchatroom.domain.UserChatroom;
 import org.opensource.userchatroom.port.in.command.JoinUserInChatroomCommand;
 import org.opensource.userchatroom.port.in.usecase.UserChatroomQueryUsecase;
