@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface UserChatroomUsecase {
 
-    Long joinUserInChatroom(JoinUserInChatroomCommand command);
+    Object joinUserInChatroom(JoinUserInChatroomCommand command);
 
-    void leaveUserAtChatRoomByChatRoomId(Long chatroomId);
+    void leaveUsersAtChatRoomByChatRoomId(Long chatroomId);
 
     UserChatroom findUserInChatRoom(Long userId, Long chatRoomId);
 
