@@ -9,13 +9,11 @@ public interface UserChatroomUsecase {
 
     Object joinUserInChatroom(JoinUserInChatroomCommand command);
 
-    void leaveUsersAtChatRoomByChatRoomId(Long chatroomId);
+    void deleteUserAtChatRoomByChatRoomId(Long userId, Long chatroomId);
 
-    UserChatroom findUserInChatRoom(Long userId, Long chatRoomId);
+    void deleteAllUsersWhenChatRoomDeleted(Long chatroomId);
 
-    List<UserChatroom> findChatRoomsUserParticipatesIn(Long userId);
-
-    List<UserChatroom> findParticipantsInChatRoom(Long chatRoomId);
+    void deleteAllChatroomsWhenUserDeleted(Long userId);
 
     Boolean doesUserExistInChatRoom(Long userId, Long chatRoomId);
 }

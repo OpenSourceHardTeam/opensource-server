@@ -27,18 +27,9 @@ public class UserChatroomRepository implements UserChatroomPersistencePort {
 
     @Override
     public Long save(UserChatroom userChatroom) {
-        UserEntity userEntity = findUserEntityById(userChatroom.getUser().getId());
-        ChatroomEntity chatroomEntity = findChatroomEntityById(userChatroom.getChatroom().getId());
-
-        UserChatroomEntity userChatroomEntity = UserChatroomEntity.builder()
-                .user(userEntity)
-                .chatroom(chatroomEntity).build();
-
-        // 연관관계 편의 메서드 호출
-        userEntity.addUserChatRoom(userChatroomEntity);
-
-        return userChatroomJpaRepository.save(userChatroomEntity).getId();
+        return userChatroomJpaRepository.save(UserChatroomEntity.from(userChatroom)).getId();
     }
+
 
     @Override
     public Optional<UserChatroom> findByUserIdAndChatroomId(Long userId, Long chatroomId) {
@@ -69,15 +60,6 @@ public class UserChatroomRepository implements UserChatroomPersistencePort {
 
     @Override
     public void deleteById(Long id) {
-        UserChatroomEntity userChatroomEntity = userChatroomJpaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("UserChatroom not found with id: " + id));
-
-        UserEntity userEntity = userChatroomEntity.getUser();
-        if (userEntity != null) {
-            // 연관관계 편의 메서드 호출
-            userEntity.removeUserChatRoom(userChatroomEntity);
-        }
-
         userChatroomJpaRepository.deleteById(id);
     }
 

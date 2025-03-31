@@ -1,10 +1,11 @@
 package org.opensource.userchatroom.service;
 
 import lombok.RequiredArgsConstructor;
-import org.opensource.chatroom.domain.Chatroom;
+
 import org.opensource.user.domain.User;
 import org.opensource.userchatroom.domain.UserChatroom;
 import org.opensource.userchatroom.port.in.command.JoinUserInChatroomCommand;
+import org.opensource.userchatroom.port.in.usecase.UserChatroomQueryUsecase;
 import org.opensource.userchatroom.port.in.usecase.UserChatroomUsecase;
 import org.opensource.userchatroom.port.out.persistence.UserChatroomPersistencePort;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserChatroomService implements UserChatroomUsecase {
+public class UserChatroomService implements UserChatroomUsecase, UserChatroomQueryUsecase {
 
     private final UserChatroomPersistencePort userChatroomPersistencePort;
 
@@ -37,8 +38,23 @@ public class UserChatroomService implements UserChatroomUsecase {
     }
 
     @Override
-    public void leaveUsersAtChatRoomByChatRoomId(Long chatroomId) {
+    public void deleteUserAtChatRoomByChatRoomId(Long userId, Long chatroomId) {
+        UserChatroom userChatroom = userChatroomPersistencePort.findByUserIdAndChatroomId(userId, chatroomId).orElseThrow();
+        userChatroomPersistencePort.deleteById(userChatroom.getId());
+    }
+
+    @Override
+    public void deleteAllUsersWhenChatRoomDeleted(Long chatroomId) {
         List<UserChatroom> userChatRooms = userChatroomPersistencePort.findUserListByChatRoomId(chatroomId);
+
+        for (UserChatroom userChatroom : userChatRooms) {
+            userChatroomPersistencePort.deleteById(userChatroom.getId());
+        }
+    }
+
+    @Override
+    public void deleteAllChatroomsWhenUserDeleted(Long userId) {
+        List<UserChatroom> userChatRooms = userChatroomPersistencePort.findChatroomListByUserId(userId);
 
         for (UserChatroom userChatroom : userChatRooms) {
             userChatroomPersistencePort.deleteById(userChatroom.getId());

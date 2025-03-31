@@ -23,9 +23,6 @@ public class UserEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<UserChatroomEntity> userChatRooms = new ArrayList<>();
-
     @Builder
     private UserEntity(String userName) {
         this.name = userName;
@@ -42,15 +39,5 @@ public class UserEntity {
                 .id(this.id)
                 .name(this.name)
                 .build();
-    }
-
-    public void addUserChatRoom(UserChatroomEntity userChatRoom) {
-        userChatRooms.add(userChatRoom);
-        userChatRoom.setUser(this);
-    }
-
-    public void removeUserChatRoom(UserChatroomEntity userChatRoom) {
-        userChatRooms.remove(userChatRoom);
-        userChatRoom.setUser(null);
     }
 }
