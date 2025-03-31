@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 public class User {
-    private long id;
+    private Long id;
     private String name;
 
     @Builder
     public User(
-            long id,
+            Long id,
             String name) {
         this.id = id;
         this.name = name;

@@ -11,16 +11,16 @@ public interface UserChatroomPersistencePort {
 
     Long save(UserChatroom userChatRoom);
 
-    Optional<UserChatroom> findByUserAndChatRoom(User user, Chatroom chatRoom);
+    Optional<UserChatroom> findByUserIdAndChatroomId(Long userId, Long chatroomId);
 
     // 특정 유저가 참여한 채팅방 목록 조회
-    List<UserChatroom> findByUser(User user);
+    List<UserChatroom> findChatroomListByUserId(Long userId);
 
     // 특정 채팅방에 속한 유저 목록 조회
-    List<UserChatroom> findByChatRoom(Chatroom chatRoom);
+    List<UserChatroom> findUserListByChatRoomId(Long chatroomId);
 
     // 특정 유저가 특정 채팅방에 참여 여부 확인
-    boolean existsByUserAndChatRoom(User user, Chatroom chatRoom);
+    boolean existsByUserIdAndChatRoomId(Long userId, Long chatroomId);
 
     void deleteById(Long id);
 }
