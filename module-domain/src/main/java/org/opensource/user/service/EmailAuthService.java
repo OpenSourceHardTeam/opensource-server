@@ -5,18 +5,16 @@ import exception.BadRequestException;
 import exception.InternalServerException;
 import exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.opensource.user.port.in.command.EmailAuthCommand;
 import org.opensource.user.port.in.usecase.EmailAuthUseCase;
-import org.opensource.user.port.out.persistence.EmailAuthPersistencePort;
 import org.opensource.user.port.out.EmailSenderPort;
+import org.opensource.user.port.out.persistence.EmailAuthPersistencePort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import type.user.UserErrorType;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
