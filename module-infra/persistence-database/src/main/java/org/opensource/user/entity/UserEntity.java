@@ -5,38 +5,42 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.opensource.basetime.BaseTimeEntity;
 import org.opensource.user.domain.User;
-import org.opensource.userchatroom.entity.UserChatroomEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserEntity {
+public class UserEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Long id;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "name")
     private String name;
 
     @Builder
-    private UserEntity(String userName) {
-        this.name = userName;
+    private UserEntity(Long id, String email, String name) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
     }
 
     public static UserEntity from(User user) {
         return builder()
-                .userName(user.getName())
+                .id(user.getId())
+                .email(user.getEmail())
+                .name(user.getName())
                 .build();
     }
 
     public User toModel() {
         return User.builder()
                 .id(this.id)
+                .email(this.email)
                 .name(this.name)
                 .build();
     }
