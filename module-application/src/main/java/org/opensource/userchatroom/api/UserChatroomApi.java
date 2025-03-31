@@ -1,7 +1,7 @@
 package org.opensource.userchatroom.api;
 
 import org.opensource.CommonApiResult;
-import org.opensource.UserResponse;
+import org.opensource.user.UserResponse;
 import org.opensource.chatroom.dto.response.ChatroomResponse;
 import org.opensource.userchatroom.dto.request.JoinUserInChatroomRequest;
 import org.opensource.userchatroom.dto.response.JoinUserInChatroomResponse;
