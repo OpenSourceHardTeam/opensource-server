@@ -47,21 +47,21 @@ public class UserChatroomService implements UserChatroomUsecase {
 
     @Override
     public UserChatroom findUserInChatRoom(Long userId, Long chatRoomId) {
-        return null;
+        return userChatroomPersistencePort.findByUserIdAndChatroomId(userId, chatRoomId).orElseThrow();
     }
 
     @Override
     public List<UserChatroom> findChatRoomsUserParticipatesIn(Long userId) {
-        return List.of();
+        return userChatroomPersistencePort.findChatroomListByUserId(userId);
     }
 
     @Override
     public List<UserChatroom> findParticipantsInChatRoom(Long chatRoomId) {
-        return List.of();
+        return userChatroomPersistencePort.findUserListByChatRoomId(chatRoomId);
     }
 
     @Override
     public Boolean doesUserExistInChatRoom(Long userId, Long chatRoomId) {
-        return null;
+        return userChatroomPersistencePort.existsByUserIdAndChatRoomId(userId, chatRoomId);
     }
 }
