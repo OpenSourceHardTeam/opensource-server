@@ -34,9 +34,11 @@ public class ChatroomApiController implements ChatroomApi {
         return ResponseEntity.ok(new ChatroomResponse(chatroom.getId(), chatroom.getTopic(), chatroom.getBook().getId()));
     }
 
-    @DeleteMapping
-    public ResponseEntity<CommonApiResult> deleteChatroom(Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CommonApiResult> deleteChatroom(
+            @PathVariable Long id
+    ) {
         chatroomFacade.deleteChatroom(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommonApiResult.createOk());
     }
 }
