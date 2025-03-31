@@ -4,13 +4,16 @@ import dto.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.opensource.user.dto.response.EmailAuthResponseDto;
 import org.opensource.user.facade.UserFacade;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import type.user.UserSuccessType;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/email")
-public class EmailAuthController {
+@RequestMapping("/api/v1/email")
+public class EmailAuthController implements EmailAuthApi {
     private final UserFacade userFacade;
 
     @PostMapping("/send-email")
