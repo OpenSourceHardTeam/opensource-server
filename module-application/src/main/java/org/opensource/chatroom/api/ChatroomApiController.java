@@ -18,7 +18,7 @@ public class ChatroomApiController implements ChatroomApi {
 
     private final ChatroomFacade chatroomFacade;
 
-    @PostMapping()
+    @Override @PostMapping
     public ResponseEntity<CreateChatroomResponse> createChatroom(
            @Valid @RequestBody CreateChatroomRequest request
     ) {
@@ -26,7 +26,7 @@ public class ChatroomApiController implements ChatroomApi {
         return ResponseEntity.ok(new CreateChatroomResponse(chatroomId));
     }
 
-    @GetMapping("/{id}")
+    @Override @GetMapping("/{id}")
     public ResponseEntity<ChatroomResponse> getChatroom(
             @PathVariable Long id
     ) {
@@ -34,7 +34,7 @@ public class ChatroomApiController implements ChatroomApi {
         return ResponseEntity.ok(new ChatroomResponse(chatroom.getId(), chatroom.getTopic(), chatroom.getBook().getId()));
     }
 
-    @DeleteMapping("/{id}")
+    @Override @DeleteMapping("/{id}")
     public ResponseEntity<CommonApiResult> deleteChatroom(
             @PathVariable Long id
     ) {
