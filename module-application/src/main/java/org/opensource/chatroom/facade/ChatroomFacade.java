@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class ChatroomFacade {
 
     private final ChatroomUsecase chatroomUsecase;

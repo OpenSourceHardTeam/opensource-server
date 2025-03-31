@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 public class Chatroom {
 
-    private long id;
+    private Long id;
     private String externalRoomId;
     private String topic;
     private Book book;
@@ -22,7 +22,7 @@ public class Chatroom {
 
     @Builder
     public Chatroom(
-            long id,
+            Long id,
             String externalRoomId,
             String topic,
             Book book,

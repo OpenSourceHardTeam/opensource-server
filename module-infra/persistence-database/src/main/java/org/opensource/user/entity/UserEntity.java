@@ -6,6 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.opensource.user.domain.User;
+import org.opensource.userchatroom.entity.UserChatroomEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,6 +22,9 @@ public class UserEntity {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<UserChatroomEntity> userChatRooms = new ArrayList<>();
 
     @Builder
     private UserEntity(String userName) {
@@ -35,5 +42,15 @@ public class UserEntity {
                 .id(this.id)
                 .name(this.name)
                 .build();
+    }
+
+    public void addUserChatRoom(UserChatroomEntity userChatRoom) {
+        userChatRooms.add(userChatRoom);
+        userChatRoom.setUser(this);
+    }
+
+    public void removeUserChatRoom(UserChatroomEntity userChatRoom) {
+        userChatRooms.remove(userChatRoom);
+        userChatRoom.setUser(null);
     }
 }
