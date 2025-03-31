@@ -9,19 +9,16 @@ public class UserCredentials {
     private User user;
     private String password;
     private LoginType loginType;
-    private String refreshToken;
 
     @Builder
     public UserCredentials(
-            long id,
+            Long id,
             User user,
             String password,
-            LoginType loginType,
-            String refreshToken) {
+            LoginType loginType) {
         this.id = id;
         this.user = user;
         this.password = password;
         this.loginType = loginType;
-        this.refreshToken = refreshToken;
     }
 }

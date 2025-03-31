@@ -15,7 +15,7 @@ public class UserCredentialsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
@@ -29,33 +29,26 @@ public class UserCredentialsEntity {
     @Column(name = "login_type", nullable = false)
     private LoginType loginType;
 
-    @Column(name = "refresh_token")
-    private String refreshToken;
-
     @Builder
     private UserCredentialsEntity(
             Long id,
             UserEntity user,
             String userName,
             String password,
-            LoginType loginType,
-            String refreshToken) {
+            LoginType loginType) {
         this.id = id;
         this.user = user;
         this.userName = userName;
         this.password = password;
         this.loginType = loginType;
-        this.refreshToken = refreshToken;
     }
 
     public static UserCredentialsEntity from(UserCredentials userCredentials) {
         return builder()
-                .id(userCredentials.getId())
                 .user(UserEntity.from(userCredentials.getUser()))
                 .userName(userCredentials.getUser().getName())
                 .password(userCredentials.getPassword())
                 .loginType(userCredentials.getLoginType())
-                .refreshToken(userCredentials.getRefreshToken())
                 .build();
     }
 
@@ -65,7 +58,6 @@ public class UserCredentialsEntity {
                 .user(this.user.toModel())
                 .password(this.password)
                 .loginType(this.loginType)
-                .refreshToken(this.refreshToken)
                 .build();
     }
 }
