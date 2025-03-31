@@ -20,7 +20,7 @@ public class ChatroomEntity extends BaseTimeEntity {
     @Column(name = "chatroom_id")
     private Long id;
 
-    @Column(name = "external_room_id", nullable = false)
+    @Column(name = "external_room_id")
     private String externalRoomId;
 
     @Column(name = "topic", nullable = false)

@@ -1,10 +1,7 @@
 package org.opensource.userchatroom.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.opensource.chatroom.entity.ChatroomEntity;
 import org.opensource.user.entity.UserEntity;
 import org.opensource.userchatroom.domain.UserChatroom;
@@ -21,10 +18,12 @@ public class UserChatroomEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @Setter
     private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatroom_id")
+    @Setter
     private ChatroomEntity chatroom;
 
     private Boolean isOnline;
