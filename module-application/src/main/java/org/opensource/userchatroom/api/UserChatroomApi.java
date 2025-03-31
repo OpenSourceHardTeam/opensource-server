@@ -26,6 +26,9 @@ public interface UserChatroomApi {
     ResponseEntity<List<UserResponse>> getUsersInChatroom(
             @PathVariable Long chatroomId);
 
+    ResponseEntity<Boolean> doesUserExistInChatroom(
+            @PathVariable Long userId, @PathVariable Long chatroomId);
+
     ResponseEntity<CommonApiResult> deleteUserInChatroom(
             @PathVariable Long userId, @PathVariable Long chatroomId);
 
@@ -34,7 +37,4 @@ public interface UserChatroomApi {
 
     ResponseEntity<CommonApiResult> deleteAllChatroomsThatUserIn(
             @PathVariable Long userId);
-
-    ResponseEntity<Boolean> doesUserExistInChatroom(
-            @PathVariable Long userId, @PathVariable Long chatroomId);
 }
