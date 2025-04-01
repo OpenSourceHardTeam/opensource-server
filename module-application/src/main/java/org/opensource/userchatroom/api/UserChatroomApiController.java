@@ -1,5 +1,6 @@
 package org.opensource.userchatroom.api;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.opensource.chatroom.domain.Chatroom;
 import org.opensource.chatroom.dto.response.ChatroomResponse;
@@ -26,7 +27,7 @@ public class UserChatroomApiController implements UserChatroomApi {
 
     @Override @PostMapping
     public ResponseEntity<JoinUserInChatroomResponse> joinUserInChatroom(
-            @RequestBody JoinUserInChatroomRequest request) {
+            @Valid @RequestBody JoinUserInChatroomRequest request) {
         Long userChatroomId = userChatroomFacade.joinUserInChatRoom(
                 request.getUserId(), request.getChatroomId(), true);
         return ResponseEntity
