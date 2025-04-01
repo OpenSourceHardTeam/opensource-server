@@ -12,7 +12,7 @@
 - 사용자와 채팅룸 관리 기능
 
 ## 기술적 도전
-### Multi Module Structure &Hexagonal
+### Multi Module Structure & Hexagonal Architecture
 - 멀티 모듈과 헥사고날 아키텍처를 적용하여 모듈 간 의존성을 분리하고 외부로부터 도메인 모듈을 독립시켰습니다.
 
 ```
