@@ -1,8 +1,11 @@
 package org.opensource.userchatroom.api;
 
+import org.opensource.chatroom.domain.Chatroom;
 import org.opensource.common.CommonApiResult;
 import org.opensource.user.UserResponse;
 import org.opensource.chatroom.dto.response.ChatroomResponse;
+import org.opensource.user.domain.User;
+import org.opensource.userchatroom.domain.UserChatroom;
 import org.opensource.userchatroom.dto.request.JoinUserInChatroomRequest;
 import org.opensource.userchatroom.dto.response.JoinUserInChatroomResponse;
 import org.opensource.userchatroom.dto.response.UserChatroomResponse;
@@ -17,24 +20,24 @@ public interface UserChatroomApi {
     ResponseEntity<JoinUserInChatroomResponse> joinUserInChatroom(
             @RequestBody JoinUserInChatroomRequest request);
 
-    ResponseEntity<UserChatroomResponse> getUserChatroom(
+    ResponseEntity<UserChatroom> getUserChatroom(
             @PathVariable Long userId, @PathVariable Long chatroomId);
 
-    ResponseEntity<List<ChatroomResponse>> getUserChatrooms(
+    ResponseEntity<List<Chatroom>> getUserChatRooms(
             @PathVariable Long userId);
 
-    ResponseEntity<List<UserResponse>> getUsersInChatroom(
+    ResponseEntity<List<User>> getUsersInChatroom(
             @PathVariable Long chatroomId);
 
     ResponseEntity<Boolean> doesUserExistInChatroom(
             @PathVariable Long userId, @PathVariable Long chatroomId);
 
-    ResponseEntity<CommonApiResult> deleteUserInChatroom(
+    ResponseEntity<?> deleteUserInChatroom(
             @PathVariable Long userId, @PathVariable Long chatroomId);
 
-    ResponseEntity<CommonApiResult> deleteAllUsersInChatroom(
+    ResponseEntity<?> deleteAllUsersInChatroom(
             @PathVariable Long chatroomId);
 
-    ResponseEntity<CommonApiResult> deleteAllChatroomsThatUserIn(
+    ResponseEntity<?> leaveAllChatRoomsThatUserIn(
             @PathVariable Long userId);
 }

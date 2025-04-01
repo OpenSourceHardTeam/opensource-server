@@ -13,9 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@Transactional
+//@Transactional
 @RequiredArgsConstructor
 public class UserChatroomService implements UserChatroomUsecase, UserChatroomQueryUsecase {
 
@@ -68,13 +69,21 @@ public class UserChatroomService implements UserChatroomUsecase, UserChatroomQue
     }
 
     @Override
-    public List<UserChatroom> findChatRoomsUserParticipatesIn(User user) {
-        return userChatroomPersistencePort.findChatroomListByUserId(user);
+    public List<Chatroom> findChatRoomsUserParticipatesIn(User user) {
+        List<UserChatroom> userChatrooms = userChatroomPersistencePort.findChatroomListByUserId(user);
+
+        return userChatrooms.stream()
+                .map(UserChatroom::getChatroom)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<UserChatroom> findParticipantsInChatRoom(Chatroom chatroom) {
-        return userChatroomPersistencePort.findUserListByChatRoomId(chatroom);
+    public List<User> findParticipantsInChatRoom(Chatroom chatroom) {
+        List<UserChatroom> userChatrooms = userChatroomPersistencePort.findUserListByChatRoomId(chatroom);
+
+        return userChatrooms.stream()
+                .map(UserChatroom::getUser)
+                .collect(Collectors.toList());
     }
 
     @Override
