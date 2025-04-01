@@ -1,14 +1,16 @@
 package org.opensource.userchatroom.port.in.usecase;
 
+import org.opensource.chatroom.domain.Chatroom;
+import org.opensource.user.domain.User;
 import org.opensource.userchatroom.domain.UserChatroom;
 
 import java.util.List;
 
 public interface UserChatroomQueryUsecase {
 
-    UserChatroom findUserInChatRoom(Long userId, Long chatRoomId);
+    UserChatroom findUserInChatRoom(User user, Chatroom chatroom);
 
-    List<UserChatroom> findChatRoomsUserParticipatesIn(Long userId);
+    List<UserChatroom> findChatRoomsUserParticipatesIn(User user);
 
-    List<UserChatroom> findParticipantsInChatRoom(Long chatRoomId);
+    List<UserChatroom> findParticipantsInChatRoom(Chatroom chatroom);
 }
