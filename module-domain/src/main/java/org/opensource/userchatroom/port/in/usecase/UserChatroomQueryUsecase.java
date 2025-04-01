@@ -10,7 +10,7 @@ public interface UserChatroomQueryUsecase {
 
     UserChatroom findUserInChatRoom(User user, Chatroom chatroom);
 
-    List<UserChatroom> findChatRoomsUserParticipatesIn(User user);
+    List<Chatroom> findChatRoomsUserParticipatesIn(User user);
 
-    List<UserChatroom> findParticipantsInChatRoom(Chatroom chatroom);
+    List<User> findParticipantsInChatRoom(Chatroom chatroom);
 }
