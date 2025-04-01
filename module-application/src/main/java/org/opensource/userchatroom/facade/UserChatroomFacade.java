@@ -63,13 +63,13 @@ public class UserChatroomFacade {
     }
 
     @Transactional(readOnly = true)
-    public List<UserChatroom> findChatRoomsUserParticipatesIn(Long userId) {
+    public List<Chatroom> findChatRoomsUserParticipatesIn(Long userId) {
         User user = userFacade.findUser(userId);
         return userChatroomQueryUsecase.findChatRoomsUserParticipatesIn(user);
     }
 
     @Transactional(readOnly = true)
-    public List<UserChatroom> findParticipantsInChatRoom(Long chatroomId) {
+    public List<User> findParticipantsInChatRoom(Long chatroomId) {
         Chatroom chatroom = chatroomFacade.findChatroomById(chatroomId);
         return userChatroomQueryUsecase.findParticipantsInChatRoom(chatroom);
     }
