@@ -23,6 +23,7 @@ public class UserChatroomApiController implements UserChatroomApi {
     @Override @PostMapping
     public ResponseEntity<JoinUserInChatroomResponse> joinUserInChatroom(
             @RequestBody JoinUserInChatroomRequest request) {
+
         return null;
     }
 

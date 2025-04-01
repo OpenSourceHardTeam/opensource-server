@@ -2,6 +2,8 @@ package org.opensource.userchatroom.service;
 
 import lombok.RequiredArgsConstructor;
 
+import org.opensource.chatroom.domain.Chatroom;
+import org.opensource.user.domain.User;
 import org.opensource.userchatroom.domain.UserChatroom;
 import org.opensource.userchatroom.port.in.command.JoinUserInChatroomCommand;
 import org.opensource.userchatroom.port.in.usecase.UserChatroomQueryUsecase;
@@ -22,7 +24,7 @@ public class UserChatroomService implements UserChatroomUsecase, UserChatroomQue
     @Override
     public Long joinUserInChatroom(JoinUserInChatroomCommand command) {
         return userChatroomPersistencePort
-                .findByUserIdAndChatroomId(command.user().getId(), command.chatroom().getId())
+                .findByUserIdAndChatroomId(command.user(), command.chatroom())
                 .map(UserChatroom::getId)
                 .orElseGet(
                         () -> {
@@ -37,14 +39,14 @@ public class UserChatroomService implements UserChatroomUsecase, UserChatroomQue
     }
 
     @Override
-    public void deleteUserAtChatRoomByChatRoomId(Long userId, Long chatroomId) {
-        UserChatroom userChatroom = userChatroomPersistencePort.findByUserIdAndChatroomId(userId, chatroomId).orElseThrow();
+    public void deleteUserAtChatRoomByChatRoomId(User user, Chatroom chatroom) {
+        UserChatroom userChatroom = userChatroomPersistencePort.findByUserIdAndChatroomId(user, chatroom).orElseThrow();
         userChatroomPersistencePort.deleteById(userChatroom.getId());
     }
 
     @Override
-    public void deleteAllUsersWhenChatRoomDeleted(Long chatroomId) {
-        List<UserChatroom> userChatRooms = userChatroomPersistencePort.findUserListByChatRoomId(chatroomId);
+    public void deleteAllUsersWhenChatRoomDeleted(Chatroom chatroom) {
+        List<UserChatroom> userChatRooms = userChatroomPersistencePort.findUserListByChatRoomId(chatroom);
 
         for (UserChatroom userChatroom : userChatRooms) {
             userChatroomPersistencePort.deleteById(userChatroom.getId());
@@ -52,8 +54,8 @@ public class UserChatroomService implements UserChatroomUsecase, UserChatroomQue
     }
 
     @Override
-    public void deleteAllChatroomsWhenUserDeleted(Long userId) {
-        List<UserChatroom> userChatRooms = userChatroomPersistencePort.findChatroomListByUserId(userId);
+    public void deleteAllChatroomsWhenUserDeleted(User user) {
+        List<UserChatroom> userChatRooms = userChatroomPersistencePort.findChatroomListByUserId(user);
 
         for (UserChatroom userChatroom : userChatRooms) {
             userChatroomPersistencePort.deleteById(userChatroom.getId());
@@ -61,22 +63,22 @@ public class UserChatroomService implements UserChatroomUsecase, UserChatroomQue
     }
 
     @Override
-    public UserChatroom findUserInChatRoom(Long userId, Long chatRoomId) {
-        return userChatroomPersistencePort.findByUserIdAndChatroomId(userId, chatRoomId).orElseThrow();
+    public UserChatroom findUserInChatRoom(User user, Chatroom chatroom) {
+        return userChatroomPersistencePort.findByUserIdAndChatroomId(user, chatroom).orElseThrow();
     }
 
     @Override
-    public List<UserChatroom> findChatRoomsUserParticipatesIn(Long userId) {
-        return userChatroomPersistencePort.findChatroomListByUserId(userId);
+    public List<UserChatroom> findChatRoomsUserParticipatesIn(User user) {
+        return userChatroomPersistencePort.findChatroomListByUserId(user);
     }
 
     @Override
-    public List<UserChatroom> findParticipantsInChatRoom(Long chatRoomId) {
-        return userChatroomPersistencePort.findUserListByChatRoomId(chatRoomId);
+    public List<UserChatroom> findParticipantsInChatRoom(Chatroom chatroom) {
+        return userChatroomPersistencePort.findUserListByChatRoomId(chatroom);
     }
 
     @Override
-    public Boolean doesUserExistInChatRoom(Long userId, Long chatRoomId) {
-        return userChatroomPersistencePort.existsByUserIdAndChatRoomId(userId, chatRoomId);
+    public Boolean doesUserExistInChatRoom(User user, Chatroom chatroom) {
+        return userChatroomPersistencePort.existsByUserIdAndChatRoomId(user, chatroom);
     }
 }

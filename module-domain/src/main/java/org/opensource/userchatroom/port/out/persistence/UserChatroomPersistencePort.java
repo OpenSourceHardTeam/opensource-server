@@ -11,13 +11,13 @@ public interface UserChatroomPersistencePort {
 
     Long save(UserChatroom userChatroom);
 
-    Optional<UserChatroom> findByUserIdAndChatroomId(Long userId, Long chatroomId);
+    Optional<UserChatroom> findByUserIdAndChatroomId(User user, Chatroom chatroom);
 
-    List<UserChatroom> findChatroomListByUserId(Long userId);
+    List<UserChatroom> findChatroomListByUserId(User user);
 
-    List<UserChatroom> findUserListByChatRoomId(Long chatroomId);
+    List<UserChatroom> findUserListByChatRoomId(Chatroom chatroom);
 
-    boolean existsByUserIdAndChatRoomId(Long userId, Long chatroomId);
+    boolean existsByUserIdAndChatRoomId(User user, Chatroom chatroom);
 
     void deleteById(Long id);
 }
