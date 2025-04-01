@@ -39,4 +39,9 @@ public class UserFacade {
     public void checkNameExists(String name) {
         userUseCase.checkNameExists(name);
     }
+
+    // 구현 필요
+    public User findUser(Long id) {
+        return User.builder().id(1L).build();
+    }
 }

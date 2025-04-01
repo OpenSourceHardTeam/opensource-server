@@ -22,16 +22,16 @@ public class UserChatroomService implements UserChatroomUsecase, UserChatroomQue
     private final UserChatroomPersistencePort userChatroomPersistencePort;
 
     @Override
-    public Long joinUserInChatroom(JoinUserInChatroomCommand command) {
+    public Long joinUserInChatroom(User user, Chatroom chatroom, Boolean isOnline) {
         return userChatroomPersistencePort
-                .findByUserIdAndChatroomId(command.user(), command.chatroom())
+                .findByUserIdAndChatroomId(user, chatroom)
                 .map(UserChatroom::getId)
                 .orElseGet(
                         () -> {
                             UserChatroom userChatroom = UserChatroom.builder()
-                                            .user(command.user())
-                                            .chatroom(command.chatroom())
-                                            .isOnline(command.isOnline())
+                                            .user(user)
+                                            .chatroom(chatroom)
+                                            .isOnline(isOnline)
                                             .build();
                             return userChatroomPersistencePort.save(userChatroom);
                         }
@@ -54,7 +54,7 @@ public class UserChatroomService implements UserChatroomUsecase, UserChatroomQue
     }
 
     @Override
-    public void deleteAllChatroomsWhenUserDeleted(User user) {
+    public void deleteAllChatRoomsWhenUserDeleted(User user) {
         List<UserChatroom> userChatRooms = userChatroomPersistencePort.findChatroomListByUserId(user);
 
         for (UserChatroom userChatroom : userChatRooms) {
