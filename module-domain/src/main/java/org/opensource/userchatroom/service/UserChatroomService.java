@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//@Transactional
 @RequiredArgsConstructor
 public class UserChatroomService implements UserChatroomUsecase, UserChatroomQueryUsecase {
 
