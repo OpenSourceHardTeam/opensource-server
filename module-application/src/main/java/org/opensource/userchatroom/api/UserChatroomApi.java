@@ -1,5 +1,6 @@
 package org.opensource.userchatroom.api;
 
+import jakarta.validation.Valid;
 import org.opensource.chatroom.domain.Chatroom;
 import org.opensource.common.CommonApiResult;
 import org.opensource.user.UserResponse;
@@ -18,7 +19,7 @@ import java.util.List;
 public interface UserChatroomApi {
 
     ResponseEntity<JoinUserInChatroomResponse> joinUserInChatroom(
-            @RequestBody JoinUserInChatroomRequest request);
+            @Valid @RequestBody JoinUserInChatroomRequest request);
 
     ResponseEntity<UserChatroom> getUserChatroom(
             @PathVariable Long userId, @PathVariable Long chatroomId);
