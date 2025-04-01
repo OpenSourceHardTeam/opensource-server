@@ -1,28 +1,25 @@
-plugins {
-    id 'java'
-    id 'org.springframework.boot'
-}
+jar { enabled = false }
+bootJar { enabled = true }
 
 project(':module-application') {
     dependencies {
         implementation project(':module-common')
         implementation project(':module-domain')
         implementation project(':module-external-api')
-        implementation project(':module-infra')
+        implementation project(':module-infra:persistence-database')
+        implementation project(':module-infra:persistence-redis')
+        implementation project(':module-infra:security')
 
         implementation 'org.springframework.boot:spring-boot-starter-web'
 
         // docs
         implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 
+        // JPA
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
         // transaction
         implementation 'org.springframework:spring-tx:6.1.10'
-
-        // security & jwt
-        implementation 'org.springframework.boot:spring-boot-starter-security'
-        implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-        implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
-        implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
         /* Swagger */
         implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'

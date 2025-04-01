@@ -4,7 +4,10 @@ spring:
       - classpath:/yml/application-dev.yml
       - classpath:/yml/application-local.yml
       - classpath:/yml/application-log.yml
+      - classpath:/yml/application-redis.yml
+      - classpath:/yml/application-auth.yml
   profiles:
     group:
-      logging: dev, log
-    active: logging
+      dev: dev, log, redis
+      local: local, log, redis
+    active: local, dev
