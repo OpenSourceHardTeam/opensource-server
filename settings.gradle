@@ -8,3 +8,5 @@ include 'module-external-api'
 include 'module-infra:persistence-database'
 include 'module-infra:persistence-redis'
 include 'module-infra:security'
+include 'module-messaging'
+
