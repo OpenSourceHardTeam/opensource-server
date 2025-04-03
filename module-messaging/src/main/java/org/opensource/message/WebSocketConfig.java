@@ -13,7 +13,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry
-                .addHandler(signalingSocketHandler(), "/ws-real-chat")
+                .addHandler(signalingSocketHandler(), "/ws-booking-messaging")
                 .setAllowedOrigins("*");
     }
 
