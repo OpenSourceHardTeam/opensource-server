@@ -54,9 +54,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
             usersInChatRoom.removeIf(user -> user.getUserId().equals(userInfo.getUserId()));
 
             // 만약 해당 채팅방에 남아있는 유저가 없다면 채팅방 삭제
-            if (usersInChatRoom.isEmpty()) {
-                sessionMap.remove(userInfo.getChatRoomId());
-            }
+//            if (usersInChatRoom.isEmpty()) {
+//                sessionMap.remove(userInfo.getChatRoomId());
+//            }
         }
 
         sendMessageToChatRoom(userInfo.getChatRoomId(), userInfo.getName() + "님이 대화방을 나가셨습니다.");
