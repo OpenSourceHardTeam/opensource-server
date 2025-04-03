@@ -1,19 +1,10 @@
-plugins {
-    id 'java'
-}
+bootJar { enabled = false }
+jar { enabled = true }
 
-group = 'org.opensource'
-version = '0.0.1-SNAPSHOT'
+project(":module-messaging") {
+    dependencies {
+        implementation project(':module-common')
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-test {
-    useJUnitPlatform()
+        implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    }
 }
