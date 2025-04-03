@@ -38,5 +38,6 @@ out/
 
 ### application-secret.yml ###
 **/application-secret.yml
+**/application-mongodb-secret.yml
 
 .DS_STORE
