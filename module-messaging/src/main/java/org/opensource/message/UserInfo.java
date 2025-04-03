@@ -9,6 +9,6 @@ import org.springframework.web.socket.WebSocketSession;
 public class UserInfo {
     private String name;
     private Long userId;
-    private String chatRoomId;
+    private Long chatRoomId;
     private WebSocketSession session;
 }
