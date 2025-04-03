@@ -1,5 +1,7 @@
 package org.opensource.message;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -13,6 +15,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WebSocketHandler extends TextWebSocketHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
 
     // sessionMap Key - UserInfo chatRoomId
     private final Map<String, Set<UserInfo>> sessionMap = new ConcurrentHashMap<>();
@@ -95,6 +99,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
             String name = session.getHandshakeHeaders().getFirst("name");
             String clientIdInString = session.getHandshakeHeaders().getFirst("userId");
             String chatRoomId = session.getHandshakeHeaders().getFirst("chatRoomId");
+
+            logger.info("웹소켓 연결 성공: userId={}, name={}, chatRoomId={}", clientIdInString, name, chatRoomId);
 
             // 필수 헤더 값이 누락된 경우 예외 처리
             if (name == null || clientIdInString == null || chatRoomId == null) {

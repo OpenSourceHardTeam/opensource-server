@@ -9,6 +9,7 @@ project(':module-application') {
         implementation project(':module-infra:persistence-database')
         implementation project(':module-infra:persistence-redis')
         implementation project(':module-infra:security')
+        implementation project(':module-messaging')
 
         implementation 'org.springframework.boot:spring-boot-starter-web'
 
