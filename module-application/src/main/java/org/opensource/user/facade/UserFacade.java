@@ -2,10 +2,9 @@ package org.opensource.user.facade;
 
 import lombok.RequiredArgsConstructor;
 import org.opensource.user.domain.User;
-import org.opensource.user.domain.UserCredentials;
+import org.opensource.user.dto.response.SignInResponseDto;
 import org.opensource.user.dto.response.SignUpResponseDto;
 import org.opensource.user.mapper.UserMapper;
-import org.opensource.user.port.in.command.UserCreateCommand;
 import org.opensource.user.port.in.usecase.EmailAuthUseCase;
 import org.opensource.user.port.in.usecase.UserUseCase;
 import org.springframework.stereotype.Service;
@@ -38,6 +37,13 @@ public class UserFacade {
 
     public void checkNameExists(String name) {
         userUseCase.checkNameExists(name);
+    }
+
+    public SignInResponseDto signIn(String email, String password) {
+        String token = userUseCase.signIn(UserMapper.toUserSignInCommand(email, password));
+        Long userId = userUseCase.findUserByEmail(email).getId();
+
+        return SignInResponseDto.of(userId, token);
     }
 
     // 구현 필요
