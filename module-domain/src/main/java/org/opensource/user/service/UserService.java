@@ -86,4 +86,11 @@ public class UserService implements UserUseCase {
     public User findUserByEmail(String email) {
         return userPersistencePort.findByEmail(email);
     }
+
+    @Override
+    public User findUserById(Long id) {
+        User user = userPersistencePort.findById(id)
+                .orElseThrow(() -> new BadRequestException(UserErrorType.USER_NOT_EXIST));
+        return user;
+    }
 }
