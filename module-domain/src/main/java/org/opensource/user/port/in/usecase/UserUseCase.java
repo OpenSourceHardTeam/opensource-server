@@ -14,4 +14,6 @@ public interface UserUseCase {
     void checkNameExists(String name);
 
     User findUserByEmail(String email);
+
+    User findUserById(Long id);
 }
