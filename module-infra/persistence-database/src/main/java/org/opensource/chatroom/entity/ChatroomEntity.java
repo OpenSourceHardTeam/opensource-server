@@ -32,16 +32,16 @@ public class ChatroomEntity extends BaseTimeEntity {
 
 //    private BookArqumentEntity bookArqument;
 
-    @Column(name = "total_participants", nullable = false)
-    private int totalParticipants;
+    @Column(name = "total_participants")
+    private Integer totalParticipants;
 
-    @Column private long messageSequence;
+    @Column private Long messageSequence;
 
-    @Column private int currentParticipants;
+    @Column private Integer currentParticipants;
 
-    @Column private int messageCount;
+    @Column private Integer messageCount;
 
-    @Column boolean isArchived = false;
+    @Column Boolean isArchived = false;
 
     @Builder
     private ChatroomEntity(
@@ -49,11 +49,11 @@ public class ChatroomEntity extends BaseTimeEntity {
             String externalRoomId,
             String topic,
             BookEntity book,
-            int totalParticipants,
-            long messageSequence,
-            int currentParticipants,
-            int messageCount,
-            boolean isArchived) {
+            Integer totalParticipants,
+            Long messageSequence,
+            Integer currentParticipants,
+            Integer messageCount,
+            Boolean isArchived) {
         this.id = id;
         this.externalRoomId = externalRoomId;
         this.topic = topic;
@@ -75,7 +75,7 @@ public class ChatroomEntity extends BaseTimeEntity {
                 .messageSequence(chatroom.getMessageSequence())
                 .currentParticipants(chatroom.getCurrentParticipants())
                 .messageCount(chatroom.getMessageCount())
-                .isArchived(chatroom.isArchived())
+                .isArchived(chatroom.getIsArchived())
                 .build();
     }
 
