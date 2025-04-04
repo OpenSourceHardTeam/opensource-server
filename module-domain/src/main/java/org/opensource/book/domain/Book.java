@@ -6,10 +6,10 @@ import lombok.Getter;
 @Getter
 public class Book {
 
-    private long id;
+    private Long id;
 
     @Builder
-    public Book(long id) {
+    public Book(Long id) {
         this.id = id;
     }
 }

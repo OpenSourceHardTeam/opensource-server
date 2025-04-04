@@ -13,12 +13,12 @@ public class Chatroom {
     private String externalRoomId;
     private String topic;
     private Book book;
-//    private BookArgument bookArgument;
-    private int totalParticipants;
-    private long messageSequence;
-    private int currentParticipants;
-    private int messageCount;
-    private boolean isArchived;
+    //    private BookArgument bookArgument;
+    private Integer totalParticipants;
+    private Long messageSequence;
+    private Integer currentParticipants;
+    private Integer messageCount;
+    private Boolean isArchived;
 
     @Builder
     public Chatroom(
@@ -26,11 +26,11 @@ public class Chatroom {
             String externalRoomId,
             String topic,
             Book book,
-            int totalParticipants,
-            long messageSequence,
-            int currentParticipants,
-            int messageCount,
-            boolean isArchived
+            Integer totalParticipants,
+            Long messageSequence,
+            Integer currentParticipants,
+            Integer messageCount,
+            Boolean isArchived
     ) {
         this.id = id;
         this.externalRoomId = externalRoomId;
