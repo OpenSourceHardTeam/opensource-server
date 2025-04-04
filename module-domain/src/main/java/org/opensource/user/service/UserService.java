@@ -38,7 +38,8 @@ public class UserService implements UserUseCase {
 
             userPersistencePort.save(user);
 
-            User savedUser = userPersistencePort.findByEmail(userCreateCommand.email());
+            User savedUser = userPersistencePort.findByEmail(userCreateCommand.email())
+                    .orElseThrow(() -> new NotFoundException(UserErrorType.USER_NOT_EXIST));
 
             userCredentialsPersistencePort.save(UserCredentials.builder()
                     .user(savedUser)
@@ -84,7 +85,8 @@ public class UserService implements UserUseCase {
 
     @Override
     public User findUserByEmail(String email) {
-        return userPersistencePort.findByEmail(email);
+        return userPersistencePort.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException(UserErrorType.EMAIL_NOT_EXIST));
     }
 
     @Override
