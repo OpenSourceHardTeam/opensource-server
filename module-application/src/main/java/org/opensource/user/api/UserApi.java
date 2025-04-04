@@ -2,7 +2,9 @@ package org.opensource.user.api;
 
 import dto.response.ApiResponse;
 import jakarta.validation.Valid;
+import org.opensource.user.dto.request.SignInRequestDto;
 import org.opensource.user.dto.request.SignUpRequestDto;
+import org.opensource.user.dto.response.SignInResponseDto;
 import org.opensource.user.dto.response.SignUpResponseDto;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UserApi {
     ApiResponse<SignUpResponseDto> signUp(
             @Valid @RequestBody SignUpRequestDto request
+    );
+
+    ApiResponse<SignInResponseDto> signIn(
+            @Valid @RequestBody SignInRequestDto request
     );
 
     ApiResponse emailExist(
