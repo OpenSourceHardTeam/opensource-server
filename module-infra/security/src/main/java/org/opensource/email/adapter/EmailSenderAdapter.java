@@ -29,6 +29,7 @@ public class EmailSenderAdapter implements EmailSenderPort {
 
             javaMailSender.send(message);
         } catch (MessagingException e) {
+            e.printStackTrace();
             throw new InternalServerException(UserErrorType.SEND_EMAIL_ERROR);
         }
     }
