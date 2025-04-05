@@ -1,4 +1,7 @@
 spring:
+  config:
+    activate:
+      on-profile: auth
   mail:
     host: ${MAIL_HOST}
     port: ${MAIL_PORT}

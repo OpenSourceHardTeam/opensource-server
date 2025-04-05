@@ -8,6 +8,6 @@ spring:
       - classpath:/yml/application-auth.yml
   profiles:
     group:
-      dev: dev, log, redis
-      local: local, log, redis
+      dev: dev, log, redis, auth
+      local: local, log, redis, auth
     active: local, dev
