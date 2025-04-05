@@ -5,6 +5,7 @@ import exception.BadRequestException;
 import exception.InternalServerException;
 import exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.opensource.user.port.in.command.EmailAuthCommand;
 import org.opensource.user.port.in.usecase.EmailAuthUseCase;
 import org.opensource.user.port.out.EmailSenderPort;
@@ -15,6 +16,7 @@ import type.user.UserErrorType;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -38,6 +40,7 @@ public class EmailAuthService implements EmailAuthUseCase {
             emailAuthPersistencePort.setData(command);
             emailSenderPort.sendEmail(command.email(), authCode);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             throw new InternalServerException(UserErrorType.SEND_EMAIL_ERROR);
         }
     }
