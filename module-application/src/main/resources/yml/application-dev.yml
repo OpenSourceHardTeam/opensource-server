@@ -5,4 +5,4 @@ spring:
       on-profile: dev
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update

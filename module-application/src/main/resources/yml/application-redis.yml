@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      onprofile: redis
+      on-profile: redis
   data:
     redis:
       host: ${REDIS_HOST}
