@@ -1,8 +1,6 @@
 package org.opensource.security.jwt;
 
-import exception.UnauthorizedException;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -10,7 +8,6 @@ import org.opensource.user.domain.UserCredentials;
 import org.opensource.user.port.out.SecurityPort;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import type.user.UserErrorType;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -44,22 +41,24 @@ public class JwtUtil implements SecurityPort {
 
 
     @Override
-    public Boolean verifyToken(String token) {
-        try {
-            final Claims claims = getBody(token);
-            return true;
-        } catch (RuntimeException e) {
-            if (e instanceof ExpiredJwtException) {
-                throw new UnauthorizedException(UserErrorType.TOKEN_TIME_EXPIRED_ERROR);
-            }
-            return false;
-        }
+    public void verifyToken(String token) {
+        final Claims claims = getBody(token);
     }
 
     @Override
-    public String getJwtContents(String token) {
+    public Long getUserIdFromToken(String token) {
         final Claims claims = getBody(token);
-        return (String) claims.get("userId");
+        Object userId = claims.get("userId");
+
+        if (userId instanceof Integer) {
+            return ((Integer) userId).longValue();
+        } else if (userId instanceof Long) {
+            return (Long) userId;
+        } else if (userId instanceof String) {
+            return Long.parseLong((String) userId);
+        } else {
+            throw new IllegalArgumentException("Invalid type for userId in JWT");
+        }
     }
 
     private Key getSigningKey() {
