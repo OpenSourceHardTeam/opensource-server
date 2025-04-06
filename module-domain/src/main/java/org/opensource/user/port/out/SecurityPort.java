@@ -5,7 +5,7 @@ import org.opensource.user.domain.UserCredentials;
 public interface SecurityPort {
     String createToken(UserCredentials userCredentials);
 
-    Boolean verifyToken(String token);
+    void verifyToken(String token);
 
-    String getJwtContents(String token);
+    Long getUserIdFromToken(String token);
 }
