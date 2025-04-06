@@ -12,7 +12,11 @@ public enum UserErrorType implements ErrorType {
     EMAIL_NOT_EXIST(400, "등록된 이메일이 없습니다."),
     TOKEN_TIME_EXPIRED_ERROR(401, "토큰 기간이 만료되었습니다."),
     USER_PASSWORD_NOT_MATCH(401, "비밀번호를 잘못 입력하였습니다."),
-    USER_NOT_EXIST(400, "유저가 존재하지 않습니다.")
+    USER_NOT_EXIST(400, "유저가 존재하지 않습니다."),
+    TOKEN_NOT_FOUND(401, "accessToken을 찾을 수 없습니다."),
+    TOKEN_MALFORMED(401, "잘못된 토큰 형식입니다."),
+    TOKEN_INVALID_FORMAT(401, "토큰 포맷이 올바르지 않습니다."),
+    TOKEN_SIGNATURE_INVALID(401, "토큰 서명이 올바르지 않습니다."),
     ;
 
     private final int code;
