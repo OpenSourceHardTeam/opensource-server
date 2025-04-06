@@ -1,31 +1,67 @@
 package org.opensource.security.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.opensource.security.filter.JwtFilter;
+import org.opensource.security.handler.JwtExceptionHandler;
+import org.opensource.security.jwt.JwtUtil;
+import org.opensource.user.port.out.persistence.UserPersistencePort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final UserPersistencePort userPersistencePort;
+    private final JwtUtil jwtUtil;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
-                .headers(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable);
+                .formLogin(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(request ->
+                        request.requestMatchers(
+                                        // email 관련 api 인증 없이 호출 허용
+                                        "/api/v1/email/**",
+                                        // user 관련 api 인증 없이 호출 허용
+                                        "/api/v1/user/**",
+                                        // 예외처리를 직접하지 않은 경우 예외 출력
+                                        "/error").permitAll()
+                                .anyRequest().authenticated()
+                )
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // jwt filter 추가하여 토큰 검증
+                .addFilterBefore(jwtFilter(userPersistencePort, jwtUtil), UsernamePasswordAuthenticationFilter.class)
+                // jwt token error handler
+                .addFilterBefore(jwtExceptionHandler(), JwtFilter.class);
+
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JwtFilter jwtFilter(UserPersistencePort userPersistencePort, JwtUtil jwtUtil) {
+        return new JwtFilter(userPersistencePort, jwtUtil);
+    }
+
+    @Bean
+    public JwtExceptionHandler jwtExceptionHandler() {
+        return new JwtExceptionHandler(new ObjectMapper());
     }
 }
