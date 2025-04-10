@@ -48,7 +48,7 @@ class ChatroomServiceTest {
         void shouldFindChatroomById() {
             // Given
             Long chatroomId = 1L;
-            Book book = Book.builder().id(101L).build();
+            Book book = Book.builder().bookId(101L).build();
             Chatroom chatroom = Chatroom.builder()
                     .id(chatroomId)
                     .topic("테스트 채팅방")
@@ -65,7 +65,7 @@ class ChatroomServiceTest {
             assertThat(result).isNotNull();
             assertThat(result.getId()).isEqualTo(chatroomId);
             assertThat(result.getTopic()).isEqualTo("테스트 채팅방");
-            assertThat(result.getBook().getId()).isEqualTo(101L);
+            assertThat(result.getBook().getBookId()).isEqualTo(101L);
 
             verify(chatroomPersistencePort).findById(chatroomId);
         }
@@ -113,7 +113,7 @@ class ChatroomServiceTest {
 
             Chatroom savedChatroom = chatroomCaptor.getValue();
             assertThat(savedChatroom.getTopic()).isEqualTo(topic);
-            assertThat(savedChatroom.getBook().getId()).isEqualTo(bookId);
+            assertThat(savedChatroom.getBook().getBookId()).isEqualTo(bookId);
             // 여기서 bookArgumentId는 서비스 내부 구현에 따라 검증 방식이 달라질 수 있음
             // 현재 서비스 코드에는 bookArgumentId 활용 로직이 보이지 않음
         }
