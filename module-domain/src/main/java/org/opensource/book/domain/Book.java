@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public class Book {
     private Long bookId;
+    private Long bookRank;
     private String bookImageUrl;
     private String bookTitle;
     private String bookAuthor;
@@ -17,6 +18,7 @@ public class Book {
     @Builder
     public Book(
         Long bookId,
+        Long bookRank,
         String bookImageUrl,
         String bookTitle,
         String bookAuthor,
@@ -26,6 +28,7 @@ public class Book {
         String publisherReview
     ) {
         this.bookId = bookId;
+        this.bookRank = bookRank;
         this.bookImageUrl = bookImageUrl;
         this.bookTitle = bookTitle;
         this.bookAuthor = bookAuthor;
