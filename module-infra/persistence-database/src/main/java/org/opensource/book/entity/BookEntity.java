@@ -15,6 +15,13 @@ public class BookEntity {
     @Column(name = "book_id")
     private Long bookId;
 
+    // 책 중복 확인용
+    @Column(name = "book_cmdt_code", unique = true, nullable = false)
+    private Long bookCmdtCode;
+
+    @Column(name = "book_rank")
+    private Long bookRank;
+
     @Column(name = "book_image_url")
     private String bookImageUrl;
 
@@ -24,7 +31,7 @@ public class BookEntity {
     @Column(name = "book_author")
     private String bookAuthor;
 
-    @Column(name = "book_description")
+    @Column(name = "book_description", columnDefinition = "TEXT")
     private String bookDescription;
 
     @Column(name = "publisher_name")
@@ -33,12 +40,13 @@ public class BookEntity {
     @Column(name = "publish_date")
     private String publishDate;
 
-    @Column(name = "publisher_review")
+    @Column(name = "publisher_review", columnDefinition = "TEXT")
     private String publisherReview;
 
     @Builder
     public BookEntity(
         Long bookId,
+        Long bookRank,
         String bookImageUrl,
         String bookTitle,
         String bookAuthor,
@@ -48,6 +56,7 @@ public class BookEntity {
         String publisherReview
     ) {
         this.bookId = bookId;
+        this.bookRank = bookRank;
         this.bookImageUrl = bookImageUrl;
         this.bookTitle = bookTitle;
         this.bookAuthor = bookAuthor;
@@ -61,6 +70,7 @@ public class BookEntity {
     public static BookEntity from(Book book) {
         return builder()
                 .bookId(book.getBookId())
+                .bookRank(book.getBookRank())
                 .bookImageUrl(book.getBookImageUrl())
                 .bookTitle(book.getBookTitle())
                 .bookAuthor(book.getBookAuthor())
@@ -74,6 +84,7 @@ public class BookEntity {
     public Book toModel() {
         return Book.builder()
                 .bookId(bookId)
+                .bookRank(bookRank)
                 .bookImageUrl(bookImageUrl)
                 .bookTitle(bookTitle)
                 .bookAuthor(bookAuthor)
