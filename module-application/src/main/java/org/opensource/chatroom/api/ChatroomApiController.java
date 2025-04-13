@@ -31,7 +31,7 @@ public class ChatroomApiController implements ChatroomApi {
             @PathVariable Long id
     ) {
         Chatroom chatroom = chatroomFacade.findChatroomById(id);
-        return ResponseEntity.ok(new ChatroomResponse(chatroom.getId(), chatroom.getTopic(), chatroom.getBook().getId()));
+        return ResponseEntity.ok(new ChatroomResponse(chatroom.getId(), chatroom.getTopic(), chatroom.getBook().getBookId()));
     }
 
     @Override @DeleteMapping("/{id}")
