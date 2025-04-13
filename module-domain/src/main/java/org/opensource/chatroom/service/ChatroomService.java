@@ -33,7 +33,7 @@ public class ChatroomService implements ChatroomUsecase, ChatroomUpdateUsecase {
         return chatroomPersistencePort.save(
                 Chatroom.builder()
                         .topic(command.topic())
-                        .book(Book.builder().id(command.bookId()).build())
+                        .book(Book.builder().bookId(command.bookId()).build())
                         .build()
         );
     }
