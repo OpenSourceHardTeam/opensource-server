@@ -4,7 +4,7 @@ import exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.opensource.book.domain.Book;
 import org.opensource.book.port.in.usecase.BookUsecase;
-import org.opensource.book.port.out.BookPort;
+import org.opensource.book.port.out.persistence.BookPort;
 import org.springframework.stereotype.Service;
 import type.user.BookErrorType;
 

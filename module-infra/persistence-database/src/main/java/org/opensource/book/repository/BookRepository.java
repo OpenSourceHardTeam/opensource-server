@@ -3,7 +3,7 @@ package org.opensource.book.repository;
 import lombok.RequiredArgsConstructor;
 import org.opensource.book.domain.Book;
 import org.opensource.book.entity.BookEntity;
-import org.opensource.book.port.out.BookPort;
+import org.opensource.book.port.out.persistence.BookPort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
