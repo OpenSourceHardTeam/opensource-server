@@ -1,4 +1,4 @@
-package org.opensource.book.port.out;
+package org.opensource.book.port.out.persistence;
 
 import org.opensource.book.domain.Book;
 
