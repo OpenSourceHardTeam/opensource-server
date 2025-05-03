@@ -4,7 +4,7 @@ import exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.opensource.book.domain.Book;
 import org.opensource.book.port.in.usecase.BookUsecase;
-import org.opensource.book.port.out.persistence.BookPort;
+import org.opensource.book.port.out.persistence.BookPersistencePort;
 import org.springframework.stereotype.Service;
 import type.user.BookErrorType;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BookService implements BookUsecase {
-    private final BookPort bookPort;
+    private final BookPersistencePort bookPort;
 
     @Override
     public List<Book> findAllBooks() {

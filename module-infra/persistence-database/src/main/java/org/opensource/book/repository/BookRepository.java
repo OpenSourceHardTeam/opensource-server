@@ -3,7 +3,7 @@ package org.opensource.book.repository;
 import lombok.RequiredArgsConstructor;
 import org.opensource.book.domain.Book;
 import org.opensource.book.entity.BookEntity;
-import org.opensource.book.port.out.persistence.BookPort;
+import org.opensource.book.port.out.persistence.BookPersistencePort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class BookRepository implements BookPort {
+public class BookRepository implements BookPersistencePort {
     private final BookJpaRepository repository;
 
     @Override
