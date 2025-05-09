@@ -1,6 +1,8 @@
 package org.opensource.vote.api;
 
 import dto.response.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.opensource.user.annotation.LoginUserId;
@@ -16,11 +18,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/vote")
 @RequiredArgsConstructor
+@Tag(name = "Vote", description = "투표 API Document")
 public class VoteController implements VoteApi {
     private final VoteFacade voteFacade;
 
     @Override
     @PostMapping("/add-vote")
+    @Operation(summary = "투표 등록 API", description = "사용자가 투표를 등록합니다.")
     public ApiResponse addVote(
             @RequestBody @Valid AddVoteRequestDto addVoteRequestDto) {
         voteFacade.addVote(addVoteRequestDto);
@@ -29,6 +33,7 @@ public class VoteController implements VoteApi {
 
     @Override
     @PostMapping("/vote")
+    @Operation(summary = "투표 API", description = "사용자가 투표합니다.")
     public ApiResponse vote(
             @LoginUserId Long userId,
             @RequestBody @Valid VoteRequestDto voteRequestDto) {
@@ -38,6 +43,7 @@ public class VoteController implements VoteApi {
 
     @Override
     @GetMapping("/all-votes")
+    @Operation(summary = "책 투표 리스트 API", description = "책에 등록된 투표를 전부 불러옵니다.")
     public ApiResponse<List<GetVoteResponseDto>> getAllVotes(
             @RequestParam Long bookId) {
         List<GetVoteResponseDto> response = voteFacade.getAllVotes(bookId)
@@ -49,6 +55,7 @@ public class VoteController implements VoteApi {
 
     @Override
     @GetMapping("/user-answered")
+    @Operation(summary = "사용자 투표 확인 API", description = "사용자가 찬성인지 반대인지를 보여줍니다.")
     public ApiResponse<Boolean> getVoteAnswered(
             @LoginUserId Long userId,
             @RequestParam Long voteId) {
