@@ -1,6 +1,8 @@
 package org.opensource.user.api;
 
 import dto.response.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.opensource.user.dto.request.SignInRequestDto;
@@ -14,11 +16,13 @@ import type.user.UserSuccessType;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
+@Tag(name = "User", description = "유저 API Document")
 public class UserController implements UserApi {
     private final UserFacade userFacade;
 
     @Override
     @PostMapping("/signup")
+    @Operation(summary = "회원가입 API", description = "유저 회원가입")
     public ApiResponse<SignUpResponseDto> signUp(
             @RequestBody @Valid final SignUpRequestDto request
     ) {
@@ -27,6 +31,7 @@ public class UserController implements UserApi {
 
     @Override
     @PostMapping("/signin")
+    @Operation(summary = "로그인 API", description = "유저 로그인")
     public ApiResponse<SignInResponseDto> signIn(
             @RequestBody @Valid SignInRequestDto request) {
         return ApiResponse.success(UserSuccessType.SIGN_IN_SUCCESS, userFacade.signIn(request.getEmail(), request.getPassword()));
@@ -34,6 +39,7 @@ public class UserController implements UserApi {
 
     @Override
     @PostMapping("/email-exist")
+    @Operation(summary = "이메일 확인 API", description = "이메일이 존재하는지 확인합니다.")
     public ApiResponse emailExist(
             @RequestParam String email
     ) {
@@ -43,6 +49,7 @@ public class UserController implements UserApi {
 
 
     @PostMapping("/name-exist")
+    @Operation(summary = "이름 확인 API", description = "이름이 존재하는지 확인합니다.")
     public ApiResponse nameExist(
             @RequestParam String name
     ) {
