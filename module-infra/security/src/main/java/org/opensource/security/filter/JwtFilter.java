@@ -91,7 +91,12 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private boolean noAuthentication(String uri) {
-        return uri.startsWith("/api/v1/email/")
+        return uri.startsWith("/swagger-ui") ||
+                uri.startsWith("/v3") ||
+                uri.startsWith("/api-docs") ||
+                uri.startsWith("/favicon.ico") ||
+                uri.startsWith("/swagger-ui.html") ||
+                uri.startsWith("/api/v1/email/")
                 || uri.startsWith("/api/v1/user/");
     }
 }

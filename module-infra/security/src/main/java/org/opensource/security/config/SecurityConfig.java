@@ -31,7 +31,16 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
-                        request.requestMatchers(
+                        request
+                                .requestMatchers(
+                                        "/swagger-ui/**",
+                                        "/v3/**",
+                                        "/swagger-resources/**",
+                                        "/webjars/**",
+                                        "/api-docs/**",
+                                        "/swagger-ui.html"
+                                ).permitAll()
+                                .requestMatchers(
                                         // email 관련 api 인증 없이 호출 허용
                                         "/api/v1/email/**",
                                         // user 관련 api 인증 없이 호출 허용
