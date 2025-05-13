@@ -11,7 +11,13 @@ public interface VotePersistencePort {
 
     void addVote(Vote vote);
 
-    List<Vote> findAllVoteByBookId(Long bookId);
+    List<Vote> findByBookIdOrderByCreateAt(Long bookId);
+
+    List<Vote> findByBookIdOrderByVoteCount(Long bookId);
 
     Optional<Vote> findByVoteId(Long voteId);
+
+    List<Vote> findAllByCreatedAt();
+
+    List<Vote> findAllByVoteCount();
 }
