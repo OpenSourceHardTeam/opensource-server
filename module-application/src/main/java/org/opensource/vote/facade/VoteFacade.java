@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +31,19 @@ public class VoteFacade {
         voteUserUsecase.voteUser(voteCommand);
     }
 
-    public List<Vote> getAllVotes(Long bookId) {
-        return voteUsecase.findAllVoteByBookId(bookId);
+    public List<Vote> findAllVotes(String sortBy) {
+        if(Objects.equals(sortBy, "createAt")) {
+            return voteUsecase.findAllByCreatedAt();
+        } else {
+            return voteUsecase.findAllByVoteCount();
+        }
+    }
+    public List<Vote> findByBookId(Long bookId, String sortBy) {
+        if(Objects.equals(sortBy, "createAt")) {
+            return voteUsecase.findByBookIdOrderByCreateAt(bookId);
+        } else {
+            return voteUsecase.findByBookIdOrderByVoteCount(bookId);
+        }
     }
 
     public Boolean getVoteAnswered(Long userId, Long voteId) {
