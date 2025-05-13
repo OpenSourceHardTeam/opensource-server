@@ -11,5 +11,11 @@ public interface VoteUsecase {
 
     void addVote(AddVoteCommand command);
 
-    List<Vote> findAllVoteByBookId(Long bookId);
+    List<Vote> findByBookIdOrderByCreateAt(Long bookId);
+
+    List<Vote> findByBookIdOrderByVoteCount(Long bookId);
+
+    List<Vote> findAllByCreatedAt();
+
+    List<Vote> findAllByVoteCount();
 }
