@@ -68,8 +68,22 @@ public class VoteService implements VoteUsecase {
     }
 
     @Override
-    @Transactional
-    public List<Vote> findAllVoteByBookId(Long bookId) {
-        return votePersistencePort.findAllVoteByBookId(bookId);
+    public List<Vote> findByBookIdOrderByCreateAt(Long bookId) {
+        return votePersistencePort.findByBookIdOrderByCreateAt(bookId);
+    }
+
+    @Override
+    public List<Vote> findByBookIdOrderByVoteCount(Long bookId) {
+        return votePersistencePort.findByBookIdOrderByVoteCount(bookId);
+    }
+
+    @Override
+    public List<Vote> findAllByCreatedAt() {
+        return votePersistencePort.findAllByCreatedAt();
+    }
+
+    @Override
+    public List<Vote> findAllByVoteCount() {
+        return votePersistencePort.findAllByVoteCount();
     }
 }
