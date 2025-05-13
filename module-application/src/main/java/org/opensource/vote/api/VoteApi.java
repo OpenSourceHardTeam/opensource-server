@@ -12,7 +12,9 @@ public interface VoteApi {
 
     ApiResponse vote(Long userId, VoteRequestDto voteRequestDto);
 
-    ApiResponse<List<GetVoteResponseDto>> getAllVotes(Long bookId);
+    ApiResponse<List<GetVoteResponseDto>> getAllVotes(String sortBy);
+
+    ApiResponse<List<GetVoteResponseDto>> getAllByBookId(Long bookId, String sortBy);
 
     ApiResponse<Boolean> getVoteAnswered(Long userId, Long voteId);
 }
