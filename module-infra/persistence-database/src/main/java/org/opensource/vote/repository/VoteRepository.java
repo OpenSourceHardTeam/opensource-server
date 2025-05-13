@@ -25,8 +25,17 @@ public class VoteRepository implements VotePersistencePort {
     }
 
     @Override
-    public List<Vote> findAllVoteByBookId(Long bookId) {
-        return voteJpaRepository.findByBook_BookId(bookId).stream()
+    public List<Vote> findByBookIdOrderByCreateAt(Long bookId) {
+        return voteJpaRepository.findByBook_BookIdOrderByCreateAtDesc(bookId)
+                .stream()
+                .map(VoteEntity::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<Vote> findByBookIdOrderByVoteCount(Long bookId) {
+        return voteJpaRepository.findByBook_BookIdOrderByVoteCountDesc(bookId)
+                .stream()
                 .map(VoteEntity::toModel)
                 .toList();
     }
@@ -34,5 +43,21 @@ public class VoteRepository implements VotePersistencePort {
     @Override
     public Optional<Vote> findByVoteId(Long voteId) {
         return voteJpaRepository.findById(voteId).map(VoteEntity::toModel);
+    }
+
+    @Override
+    public List<Vote> findAllByCreatedAt() {
+        return voteJpaRepository.findAllByOrderByCreateAtDesc()
+                .stream()
+                .map(VoteEntity::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<Vote> findAllByVoteCount() {
+        return voteJpaRepository.findAllByOrderByVoteCountDesc()
+                .stream()
+                .map(VoteEntity::toModel)
+                .toList();
     }
 }
