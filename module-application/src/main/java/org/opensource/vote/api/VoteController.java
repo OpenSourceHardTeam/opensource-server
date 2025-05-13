@@ -2,6 +2,7 @@ package org.opensource.vote.api;
 
 import dto.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import type.user.VoteSuccessType;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/vote")
@@ -42,11 +44,25 @@ public class VoteController implements VoteApi {
     }
 
     @Override
-    @GetMapping("/all-votes")
-    @Operation(summary = "책 투표 리스트 API", description = "책에 등록된 투표를 전부 불러옵니다.")
+    @GetMapping("/votes")
+    @Operation(summary = "투표 리스트 API", description = "등록된 투표를 전부 불러옵니다.")
     public ApiResponse<List<GetVoteResponseDto>> getAllVotes(
-            @RequestParam Long bookId) {
-        List<GetVoteResponseDto> response = voteFacade.getAllVotes(bookId)
+            @Parameter(description = "정렬 기준: 'createAt' 또는 'voteCount'")
+            @RequestParam String sortBy) {
+        List<GetVoteResponseDto> response = voteFacade.findAllVotes(sortBy)
+                .stream()
+                .map(GetVoteResponseDto::of)
+                .toList();
+        return ApiResponse.success(VoteSuccessType.GET_ALL_VOTE_SUCCESS, response);
+    }
+
+    @Override
+    @GetMapping("votes/book")
+    @Operation(summary = "책의 투표 리스트 API", description = "책에 등록된 투표를 전부 불러옵니다.")
+    public ApiResponse<List<GetVoteResponseDto>> getAllByBookId(
+            @RequestParam Long bookId,
+            @Parameter(description = "정렬 기준: 'createAt' 또는 'voteCount'") @RequestParam String sortBy) {
+        List<GetVoteResponseDto> response = voteFacade.findByBookId(bookId, sortBy)
                 .stream()
                 .map(GetVoteResponseDto::of)
                 .toList();
