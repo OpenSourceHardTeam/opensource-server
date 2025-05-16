@@ -20,7 +20,7 @@ public class EmailAuthController implements EmailAuthApi {
     private final UserFacade userFacade;
 
     @PostMapping("/send-email")
-    @Operation(summary = "이메일 전송 API", description = "이메일 확인을 위해 입력한 이메일로 인증번호를 전송합니다.")
+    @Operation(summary = "이메일 전송 API", description = "이메일 확인을 위해 입력한 이메일로 인증번호를 전송합니다.인증번호 유효시간은 5분입니다.")
     public ApiResponse<EmailAuthResponseDto> sendAuthCode(@RequestParam("email") String email) {
         userFacade.sendEmail(email);
         return ApiResponse.success(UserSuccessType.SEND_EMAIL_SUCCESS);

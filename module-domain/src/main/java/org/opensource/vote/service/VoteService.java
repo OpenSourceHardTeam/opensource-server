@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.opensource.book.domain.Book;
 import org.opensource.book.port.out.persistence.BookPersistencePort;
 import org.opensource.vote.domain.Vote;
+import org.opensource.vote.domain.VoteUser;
 import org.opensource.vote.port.in.command.AddVoteCommand;
 import org.opensource.vote.port.in.command.VoteCommand;
 import org.opensource.vote.port.in.usecase.VoteUsecase;
@@ -31,22 +32,25 @@ public class VoteService implements VoteUsecase {
                 .orElseThrow(() -> new BadRequestException(VoteErrorType.VOTE_NOT_EXIST));
 
         if(voteUserPersistencePort.isUserVotedByUserIdAndVoteId(command.userId(), command.voteId())) {
+            VoteUser voteUser = voteUserPersistencePort.findUserVotedByUserIdAndVoteId(command.userId(), command.voteId())
+                    .orElseThrow(() -> new BadRequestException(VoteErrorType.USER_NOT_VOTED));
+            if(voteUser.getAnswered() == command.answered()) {
+                throw new BadRequestException(VoteErrorType.VOTE_SAME_ANSWERED);
+            }
             if(command.answered()) {
                 vote.changeDisagreeToAgree();
             } else {
                 vote.changeAgreeToDisagree();
             }
-
-            votePersistencePort.vote(vote);
         } else {
             if(command.answered()) {
                 vote.increaseAgreeCount();
             } else {
                 vote.increaseDisagreeCount();
             }
-
-            votePersistencePort.vote(vote);
         }
+
+        votePersistencePort.vote(vote);
     }
 
     @Override
