@@ -38,6 +38,12 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String uri = request.getRequestURI();
         log.info("uri: {}", uri);
+
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
+
         if (noAuthentication(uri)) {
             filterChain.doFilter(request, response);
             return;
