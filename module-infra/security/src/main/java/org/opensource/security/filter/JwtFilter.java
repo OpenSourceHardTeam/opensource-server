@@ -21,6 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import type.user.UserErrorType;
 
@@ -39,7 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         log.info("uri: {}", uri);
 
-        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+        if(CorsUtils.isPreFlightRequest(request)) {
             response.setStatus(HttpServletResponse.SC_OK);
             return;
         }
