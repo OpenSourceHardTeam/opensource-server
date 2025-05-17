@@ -30,7 +30,7 @@ public class EmailAuthController implements EmailAuthApi {
     @Operation(summary = "이메일 인증 API", description = "인증번호를 정확히 입력했는지 확인합니다.")
     public ApiResponse<EmailAuthResponseDto> validationEmail(
             @RequestParam("email") String email,
-            @RequestParam("auth-code") String authCode
+            @RequestParam("authCode") String authCode
     ) {
         userFacade.validateEmail(email, authCode);
         return ApiResponse.success(UserSuccessType.CHECK_EMAIL_VALIDATION_SUCCESS);
