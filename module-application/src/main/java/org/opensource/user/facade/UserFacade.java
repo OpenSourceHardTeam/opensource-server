@@ -50,4 +50,12 @@ public class UserFacade {
     public User findUser(Long id) {
         return userUseCase.findUserById(id);
     }
+
+    public void changeUserName(Long id, String name) {
+        userUseCase.changeUserName(id, name);
+    }
+
+    public void changeUserPassword(String email, String password) {
+        userUseCase.changeUserPassword(email, password);
+    }
 }
