@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.opensource.user.annotation.LoginUserEmail;
+import org.opensource.user.annotation.LoginUserId;
 import org.opensource.user.dto.request.SignInRequestDto;
 import org.opensource.user.dto.request.SignUpRequestDto;
 import org.opensource.user.dto.response.SignInResponseDto;
@@ -49,7 +51,7 @@ public class UserController implements UserApi {
         return ApiResponse.success(UserSuccessType.EMAIL_CAN_USE);
     }
 
-
+    @Override
     @PostMapping("/name-exist")
     @Operation(summary = "이름 확인 API", description = "이름이 존재하는지 확인합니다.")
     public ApiResponse nameExist(
@@ -57,5 +59,25 @@ public class UserController implements UserApi {
     ) {
         userFacade.checkNameExists(name);
         return ApiResponse.success(UserSuccessType.NAME_CAN_USE);
+    }
+
+    @Override
+    @PatchMapping("/change-name")
+    @Operation(summary = "이름 변경 API", description = "사용자의 이름을 변경합니다.")
+    public ApiResponse changeUserName(
+            @LoginUserId Long userId,
+            @RequestParam String newName) {
+        userFacade.changeUserName(userId, newName);
+        return ApiResponse.success(UserSuccessType.CHANGE_USER_NAME_SUCCESS);
+    }
+
+    @Override
+    @PatchMapping("/change-password")
+    @Operation(summary = "비밀번호 변경 API", description = "사용자의 비밀번호를 변경합니다.")
+    public ApiResponse changePassword(
+            @LoginUserEmail String email,
+            @RequestParam String newPassword) {
+        userFacade.changeUserPassword(email, newPassword);
+        return ApiResponse.success(UserSuccessType.CHANGE_USER_PASSWORD_SUCCESS);
     }
 }
