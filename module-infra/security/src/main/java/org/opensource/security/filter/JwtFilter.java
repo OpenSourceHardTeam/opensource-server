@@ -10,7 +10,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jdk.jshell.spi.ExecutionControl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.opensource.security.dto.CustomUser;
@@ -40,7 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         log.info("uri: {}", uri);
 
-        if(CorsUtils.isPreFlightRequest(request)) {
+        if (CorsUtils.isPreFlightRequest(request)) {
             response.setStatus(HttpServletResponse.SC_OK);
             return;
         }
@@ -103,7 +102,10 @@ public class JwtFilter extends OncePerRequestFilter {
                 uri.startsWith("/api-docs") ||
                 uri.startsWith("/favicon.ico") ||
                 uri.startsWith("/swagger-ui.html") ||
-                uri.startsWith("/api/v1/email/")
-                || uri.startsWith("/api/v1/user/");
+                uri.startsWith("/api/v1/email/") ||
+                uri.startsWith("/api/v1/user/signin") ||
+                uri.startsWith("/api/v1/user/signup") ||
+                uri.startsWith("/api/v1/user/email-exist") ||
+                uri.startsWith("/api/v1/user/name-exist");
     }
 }
