@@ -18,4 +18,8 @@ public class User {
         this.email = email;
         this.name = name;
     }
+
+    public void changeUserName(String newName) {
+        this.name = newName;
+    }
 }

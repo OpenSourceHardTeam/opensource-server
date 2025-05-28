@@ -95,4 +95,20 @@ public class UserService implements UserUseCase {
                 .orElseThrow(() -> new BadRequestException(UserErrorType.USER_NOT_EXIST));
         return user;
     }
+
+    @Override
+    public void changeUserName(Long id, String newName) {
+        User user = userPersistencePort.findById(id)
+                .orElseThrow(() -> new NotFoundException(UserErrorType.USER_NOT_EXIST));
+        user.changeUserName(newName);
+        userPersistencePort.save(user);
+    }
+
+    @Override
+    public void changeUserPassword(String email, String newPassword) {
+        UserCredentials userCredentials = userCredentialsPersistencePort.findByUserEmail(email)
+                .orElseThrow(() -> new NotFoundException(UserErrorType.USER_NOT_EXIST));
+        userCredentials.changeUserPassword(passwordEncoderPort.encode(newPassword));
+        userCredentialsPersistencePort.save(userCredentials);
+    }
 }

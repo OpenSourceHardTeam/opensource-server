@@ -21,4 +21,8 @@ public class UserCredentials {
         this.password = password;
         this.loginType = loginType;
     }
+
+    public void changeUserPassword(String newPassword) {
+        this.password = newPassword;
+    }
 }

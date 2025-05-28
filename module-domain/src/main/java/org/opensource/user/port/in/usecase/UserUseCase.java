@@ -16,4 +16,8 @@ public interface UserUseCase {
     User findUserByEmail(String email);
 
     User findUserById(Long id);
+
+    void changeUserName(Long id, String name);
+
+    void changeUserPassword(String email, String password);
 }

@@ -2,6 +2,8 @@ package org.opensource.user.api;
 
 import dto.response.ApiResponse;
 import jakarta.validation.Valid;
+import org.opensource.user.annotation.LoginUserEmail;
+import org.opensource.user.annotation.LoginUserId;
 import org.opensource.user.dto.request.SignInRequestDto;
 import org.opensource.user.dto.request.SignUpRequestDto;
 import org.opensource.user.dto.response.SignInResponseDto;
@@ -24,5 +26,15 @@ public interface UserApi {
 
     ApiResponse nameExist(
             @RequestParam String name
+    );
+
+    ApiResponse changeUserName(
+            @LoginUserId Long userId,
+            @RequestParam String newName
+    );
+
+    ApiResponse changePassword(
+            @LoginUserEmail String email,
+            @RequestParam String newPassword
     );
 }

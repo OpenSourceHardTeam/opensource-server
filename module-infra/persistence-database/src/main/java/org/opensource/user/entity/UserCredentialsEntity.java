@@ -19,9 +19,6 @@ public class UserCredentialsEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @Column(name = "user_name", nullable = false)
-    private String userName;
-
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -33,20 +30,18 @@ public class UserCredentialsEntity {
     private UserCredentialsEntity(
             Long id,
             UserEntity user,
-            String userName,
             String password,
             LoginType loginType) {
         this.id = id;
         this.user = user;
-        this.userName = userName;
         this.password = password;
         this.loginType = loginType;
     }
 
     public static UserCredentialsEntity from(UserCredentials userCredentials) {
         return builder()
+                .id(userCredentials.getId())
                 .user(UserEntity.from(userCredentials.getUser()))
-                .userName(userCredentials.getUser().getName())
                 .password(userCredentials.getPassword())
                 .loginType(userCredentials.getLoginType())
                 .build();
