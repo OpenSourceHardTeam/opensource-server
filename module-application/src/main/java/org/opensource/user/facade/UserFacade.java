@@ -51,11 +51,7 @@ public class UserFacade {
         return userUseCase.findUserById(id);
     }
 
-    public void changeUserName(Long id, String name) {
-        userUseCase.changeUserName(id, name);
-    }
-
-    public void changeUserPassword(String email, String password) {
-        userUseCase.changeUserPassword(email, password);
+    public void changeUserInformation(Long id, String email, String newName, String newPassword) {
+        userUseCase.changeUserInformation(id, email, newName, newPassword);
     }
 }
