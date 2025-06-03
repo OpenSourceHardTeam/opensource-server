@@ -96,19 +96,21 @@ public class UserService implements UserUseCase {
         return user;
     }
 
-    @Override
-    public void changeUserName(Long id, String newName) {
-        User user = userPersistencePort.findById(id)
-                .orElseThrow(() -> new NotFoundException(UserErrorType.USER_NOT_EXIST));
-        user.changeUserName(newName);
-        userPersistencePort.save(user);
-    }
+    public void changeUserInformation(Long id, String email, String newName, String newPassword) {
+        System.out.println("newName: " + newName);
+        System.out.println("newPassword: " + newPassword);
+        if(newName != null) {
+            User user = userPersistencePort.findById(id)
+                    .orElseThrow(() -> new NotFoundException(UserErrorType.USER_NOT_EXIST));
+            user.changeUserName(newName);
+            userPersistencePort.save(user);
+        }
 
-    @Override
-    public void changeUserPassword(String email, String newPassword) {
-        UserCredentials userCredentials = userCredentialsPersistencePort.findByUserEmail(email)
-                .orElseThrow(() -> new NotFoundException(UserErrorType.USER_NOT_EXIST));
-        userCredentials.changeUserPassword(passwordEncoderPort.encode(newPassword));
-        userCredentialsPersistencePort.save(userCredentials);
+        if(newPassword != null) {
+            UserCredentials userCredentials = userCredentialsPersistencePort.findByUserEmail(email)
+                    .orElseThrow(() -> new NotFoundException(UserErrorType.USER_NOT_EXIST));
+            userCredentials.changeUserPassword(passwordEncoderPort.encode(newPassword));
+            userCredentialsPersistencePort.save(userCredentials);
+        }
     }
 }
