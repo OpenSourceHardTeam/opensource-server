@@ -1,4 +1,4 @@
-package org.opensource.message;
+package org.opensource.websocket;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
