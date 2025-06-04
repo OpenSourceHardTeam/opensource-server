@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
@@ -29,7 +30,20 @@ public class SecurityConfig {
     private final UserPersistencePort userPersistencePort;
     private final JwtUtil jwtUtil;
 
+    // WebSocket 전용 SecurityFilterChain (우선순위 높음)
     @Bean
+    @Order(1)
+    public SecurityFilterChain webSocketSecurityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .securityMatcher("/ws-booking-messaging", "/ws-booking-messaging/**")
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())  // 모든 요청 허용
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .build();
+    }
+
+    @Bean
+    @Order(2)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -50,9 +64,6 @@ public class SecurityConfig {
                                         "/api/v1/email/**",
                                         // user 관련 api 인증 없이 호출 허용
                                         "/api/v1/user/**",
-                                        // WebSocket 연결 인증 없이 허용 👈 이 줄 추가
-                                        "/ws-booking-messaging",
-                                        "/ws-booking-messaging/**",
                                         // 예외처리를 직접하지 않은 경우 예외 출력
                                         "/error").permitAll()
                                 .requestMatchers(
