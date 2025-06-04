@@ -52,6 +52,7 @@ public class SecurityConfig {
                                         "/api/v1/user/**",
                                         // WebSocket 연결 인증 없이 허용 👈 이 줄 추가
                                         "/ws-booking-messaging",
+                                        "/ws-booking-messaging/**",
                                         // 예외처리를 직접하지 않은 경우 예외 출력
                                         "/error").permitAll()
                                 .anyRequest().authenticated()
