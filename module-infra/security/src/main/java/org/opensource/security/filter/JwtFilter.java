@@ -106,6 +106,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 uri.startsWith("/api/v1/user/signin") ||
                 uri.startsWith("/api/v1/user/signup") ||
                 uri.startsWith("/api/v1/user/email-exist") ||
-                uri.startsWith("/api/v1/user/name-exist");
+                uri.startsWith("/api/v1/user/name-exist") ||
+                uri.startsWith("/api/v1/book") ||
+                uri.startsWith("/api/v1/vote/votes");
     }
 }

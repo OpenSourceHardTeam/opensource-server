@@ -52,6 +52,10 @@ public class SecurityConfig {
                                         "/api/v1/user/**",
                                         // 예외처리를 직접하지 않은 경우 예외 출력
                                         "/error").permitAll()
+                                .requestMatchers(
+                                        "/api/v1/book/**",
+                                        "/api/v1/vote/votes/**"
+                                ).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->
