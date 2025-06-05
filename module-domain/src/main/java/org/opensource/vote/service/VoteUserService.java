@@ -52,7 +52,11 @@ public class VoteUserService implements VoteUserUsecase {
     @Transactional
     public Boolean userAnswered(Long userId, Long voteId) {
         VoteUser voteUser = voteUserPersistencePort.findUserVotedByUserIdAndVoteId(userId, voteId)
-                .orElseThrow(() -> new BadRequestException(VoteErrorType.USER_NOT_VOTED));
-        return voteUser.getAnswered();
+                .orElse(null);
+        if (voteUser == null) {
+            return null;
+        } else {
+            return voteUser.getAnswered();
+        }
     }
 }
