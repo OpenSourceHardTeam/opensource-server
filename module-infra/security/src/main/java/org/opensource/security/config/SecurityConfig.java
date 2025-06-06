@@ -72,7 +72,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(
-                List.of("http://localhost:5173")
+                List.of("http://localhost:5173",
+                        "https://bookingopen.netlify.app/")
         );
         configuration.setAllowCredentials(true);
         configuration.addAllowedMethod("*");
