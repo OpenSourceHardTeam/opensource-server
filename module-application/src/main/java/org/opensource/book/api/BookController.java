@@ -35,4 +35,12 @@ public class BookController implements BookApi {
             @RequestParam Long bookId) {
         return ApiResponse.success(BookSuccessType.GET_BOOK, bookFacade.getBook(bookId));
     }
+
+    @Override
+    @GetMapping("/get-book-by-title")
+    @Operation(summary = "책 검색 API", description = "책 이름 검색으로 정보를 불러옵니다.")
+    public ApiResponse<List<BookResponseDto>> getBookByTitle(
+            @RequestParam String title) {
+        return ApiResponse.success(BookSuccessType.GET_BOOK, bookFacade.getBookByTitle(title));
+    }
 }
