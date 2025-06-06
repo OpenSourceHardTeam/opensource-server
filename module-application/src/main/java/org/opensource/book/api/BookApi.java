@@ -9,4 +9,6 @@ public interface BookApi {
     ApiResponse<List<BookResponseDto>> getAllBooks();
 
     ApiResponse<BookResponseDto> getBookById(Long bookId);
+
+    ApiResponse<List<BookResponseDto>> getBookByTitle(String title);
 }
