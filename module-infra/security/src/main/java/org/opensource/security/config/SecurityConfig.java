@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,12 +30,20 @@ public class SecurityConfig {
     private final UserPersistencePort userPersistencePort;
     private final JwtUtil jwtUtil;
 
+    // WebSocket 전용 SecurityFilterChain (우선순위 높음)
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring()
-                .requestMatchers("/ws-booking-messaging/**");
+    @Order(1)
+    public SecurityFilterChain webSocketSecurityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .securityMatcher("/ws-booking-messaging", "/ws-booking-messaging/**")
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())  // 모든 요청 허용
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .build();
     }
 
+    @Bean
+    @Order(2)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -61,8 +68,7 @@ public class SecurityConfig {
                                         "/error").permitAll()
                                 .requestMatchers(
                                         "/api/v1/book/**",
-                                        "/api/v1/vote/votes/**",
-                                        "/ws-booking-messaging/**"
+                                        "/api/v1/vote/votes/**"
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )
