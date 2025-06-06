@@ -26,4 +26,12 @@ public class BookRepository implements BookPersistencePort {
     public Optional<Book> getBookById(Long id) {
         return repository.findById(id).map(BookEntity::toModel);
     }
+
+    @Override
+    public List<Book> getBookByTitle(String title) {
+        return repository.searchBookEntityByBookTitle(title)
+                .stream()
+                .map(BookEntity::toModel)
+                .toList();
+    }
 }

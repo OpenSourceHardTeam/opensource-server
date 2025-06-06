@@ -25,4 +25,11 @@ public class BookFacade {
     public BookResponseDto getBook(Long id) {
         return BookResponseDto.of(bookUsecase.findBookById(id));
     }
+
+    public List<BookResponseDto> getBookByTitle(String title) {
+        return bookUsecase.findBookByTitle(title)
+                .stream()
+                .map(BookResponseDto::of)
+                .toList();
+    }
 }

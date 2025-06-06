@@ -29,4 +29,9 @@ public class BookService implements BookUsecase {
         return bookPort.getBookById(id)
                 .orElseThrow(() -> new BadRequestException(BookErrorType.GET_BOOK_INFO_ERROR));
     }
+
+    @Override
+    public List<Book> findBookByTitle(String title) {
+        return bookPort.getBookByTitle(title);
+    }
 }
