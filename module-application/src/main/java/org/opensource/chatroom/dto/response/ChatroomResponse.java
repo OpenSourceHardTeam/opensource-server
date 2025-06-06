@@ -7,8 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ChatroomResponse {
 
-    private Long id;
     private String topic;
     private Long bookId;
-//    private Long bookArgumentId;
 }

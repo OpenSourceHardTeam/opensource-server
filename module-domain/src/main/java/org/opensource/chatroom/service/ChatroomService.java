@@ -2,6 +2,7 @@ package org.opensource.chatroom.service;
 
 import lombok.RequiredArgsConstructor;
 import org.opensource.book.domain.Book;
+import org.opensource.book.port.in.usecase.BookUsecase;
 import org.opensource.chatroom.domain.Chatroom;
 import org.opensource.chatroom.port.in.command.CreateChatroomCommand;
 import org.opensource.chatroom.port.in.usecase.ChatroomUpdateUsecase;
@@ -19,6 +20,7 @@ import java.util.NoSuchElementException;
 public class ChatroomService implements ChatroomUsecase, ChatroomUpdateUsecase {
 
     private final ChatroomPersistencePort chatroomPersistencePort;
+    private final BookUsecase bookUsecase;
 
     @Override
     @Transactional(readOnly = true)
@@ -30,10 +32,11 @@ public class ChatroomService implements ChatroomUsecase, ChatroomUpdateUsecase {
 
     @Override
     public Long createBy(CreateChatroomCommand command) {
+        Book book = bookUsecase.findBookById(command.bookId());
         return chatroomPersistencePort.save(
                 Chatroom.builder()
                         .topic(command.topic())
-                        .book(Book.builder().bookId(command.bookId()).build())
+                        .book(book)
                         .build()
         );
     }

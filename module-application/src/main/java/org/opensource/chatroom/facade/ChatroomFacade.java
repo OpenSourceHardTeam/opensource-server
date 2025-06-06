@@ -1,6 +1,8 @@
 package org.opensource.chatroom.facade;
 
 import lombok.RequiredArgsConstructor;
+import org.opensource.book.domain.Book;
+import org.opensource.book.port.in.usecase.BookUsecase;
 import org.opensource.chatroom.domain.Chatroom;
 import org.opensource.chatroom.dto.request.CreateChatroomRequest;
 import org.opensource.chatroom.dto.response.CreateChatroomResponse;
@@ -13,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ChatroomFacade {
 
     private final ChatroomUsecase chatroomUsecase;
-    private final ChatroomUpdateUsecase chatroomUpdateUsecase;
 
     public Chatroom findChatroomById(Long id) {
         return chatroomUsecase.findById(id);
@@ -24,7 +26,7 @@ public class ChatroomFacade {
 
     public Long createChatroom(CreateChatroomRequest request) {
         return chatroomUsecase.createBy(ChatroomMapper.toCommand(
-                request.getTopic(), request.getBookId(), request.getBookArgumentId()
+                request.getTopic(), request.getBookId()
         ));
     }
 

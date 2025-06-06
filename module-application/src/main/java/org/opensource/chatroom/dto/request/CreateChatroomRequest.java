@@ -11,7 +11,4 @@ public class CreateChatroomRequest {
 
     @NotNull
     private Long bookId;
-
-    @NotNull
-    private Long bookArgumentId;
 }

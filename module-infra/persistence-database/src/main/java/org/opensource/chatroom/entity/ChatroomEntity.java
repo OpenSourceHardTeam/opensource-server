@@ -16,12 +16,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatroomEntity extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chatroom_id")
     private Long id;
-
-    @Column(name = "external_room_id")
-    private String externalRoomId;
 
     @Column(name = "topic", nullable = false)
     private String topic;
@@ -30,66 +28,25 @@ public class ChatroomEntity extends BaseTimeEntity {
     @JoinColumn(name = "book_id")
     private BookEntity book;
 
-//    private BookArqumentEntity bookArqument;
-
-    @Column(name = "total_participants")
-    private Integer totalParticipants;
-
-    @Column private Long messageSequence;
-
-    @Column private Integer currentParticipants;
-
-    @Column private Integer messageCount;
-
-    @Column Boolean isArchived = false;
-
     @Builder
     private ChatroomEntity(
-            Long id,
-            String externalRoomId,
             String topic,
-            BookEntity book,
-            Integer totalParticipants,
-            Long messageSequence,
-            Integer currentParticipants,
-            Integer messageCount,
-            Boolean isArchived) {
-        this.id = id;
-        this.externalRoomId = externalRoomId;
+            BookEntity book) {
         this.topic = topic;
         this.book = book;
-        this.totalParticipants = totalParticipants;
-        this.messageSequence = messageSequence;
-        this.currentParticipants = currentParticipants;
-        this.messageCount = messageCount;
-        this.isArchived = isArchived;
     }
 
     public static ChatroomEntity from(Chatroom chatroom) {
         return builder()
-                .id(chatroom.getId())
-                .externalRoomId(chatroom.getExternalRoomId())
                 .topic(chatroom.getTopic())
                 .book(BookEntity.from(chatroom.getBook()))
-                .totalParticipants(chatroom.getTotalParticipants())
-                .messageSequence(chatroom.getMessageSequence())
-                .currentParticipants(chatroom.getCurrentParticipants())
-                .messageCount(chatroom.getMessageCount())
-                .isArchived(chatroom.getIsArchived())
                 .build();
     }
 
     public Chatroom toModel() {
         return Chatroom.builder()
-                .id(id)
-                .externalRoomId(externalRoomId)
                 .topic(topic)
                 .book(this.book.toModel())
-                .totalParticipants(totalParticipants)
-                .messageSequence(messageSequence)
-                .currentParticipants(currentParticipants)
-                .messageCount(messageCount)
-                .isArchived(isArchived)
                 .build();
     }
 }
