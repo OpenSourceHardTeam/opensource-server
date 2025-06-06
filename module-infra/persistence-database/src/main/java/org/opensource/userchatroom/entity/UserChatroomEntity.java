@@ -29,7 +29,8 @@ public class UserChatroomEntity {
     private Boolean isOnline;
 
     @Builder
-    private UserChatroomEntity(UserEntity user, ChatroomEntity chatroom, Boolean isOnline) {
+    private UserChatroomEntity(Long id, UserEntity user, ChatroomEntity chatroom, Boolean isOnline) {
+        this.id = id;
         this.user = user;
         this.chatroom = chatroom;
         this.isOnline = isOnline;
@@ -37,6 +38,7 @@ public class UserChatroomEntity {
 
     public static UserChatroomEntity from(UserChatroom userChatroom) {
         return builder().
+                id(userChatroom.getId()).
                 user(UserEntity.from(userChatroom.getUser())).
                 chatroom(ChatroomEntity.from(userChatroom.getChatroom())).
                 isOnline(userChatroom.getIsOnline()).
@@ -45,6 +47,7 @@ public class UserChatroomEntity {
 
     public UserChatroom toModel() {
         return UserChatroom.builder()
+                .id(this.id)
                 .user(user.toModel())
                 .chatroom(chatroom.toModel())
                 .isOnline(isOnline)

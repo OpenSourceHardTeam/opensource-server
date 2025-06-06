@@ -41,6 +41,7 @@ public class UserChatroomApiController implements UserChatroomApi {
             @ApiResponse(responseCode = "404", description = "사용자 또는 채팅방을 찾을 수 없음"),
             @ApiResponse(responseCode = "409", description = "이미 참여 중인 채팅방")
     })
+
     @Override @PostMapping
     public ResponseEntity<JoinUserInChatroomResponse> joinUserInChatroom(
             @Parameter(description = "채팅방 참여 요청 정보", required = true)

@@ -30,6 +30,7 @@ public class ChatroomEntity extends BaseTimeEntity {
 
     @Builder
     private ChatroomEntity(
+            Long id,
             String topic,
             BookEntity book) {
         this.topic = topic;
@@ -38,6 +39,7 @@ public class ChatroomEntity extends BaseTimeEntity {
 
     public static ChatroomEntity from(Chatroom chatroom) {
         return builder()
+                .id(chatroom.getId())
                 .topic(chatroom.getTopic())
                 .book(BookEntity.from(chatroom.getBook()))
                 .build();
@@ -45,6 +47,7 @@ public class ChatroomEntity extends BaseTimeEntity {
 
     public Chatroom toModel() {
         return Chatroom.builder()
+                .id(this.id)
                 .topic(topic)
                 .book(this.book.toModel())
                 .build();
