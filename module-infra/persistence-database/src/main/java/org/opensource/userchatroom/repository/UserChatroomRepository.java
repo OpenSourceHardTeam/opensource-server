@@ -21,22 +21,38 @@ import java.util.Optional;
 public class UserChatroomRepository implements UserChatroomPersistencePort {
 
     private final UserChatroomJpaRepository userChatroomJpaRepository;
+    private final UserJpaRepository userJpaRepository;
+    private final ChatroomJpaRepository chatroomJpaRepository;
 
     @Override
     public Long save(UserChatroom userChatroom) {
-        return userChatroomJpaRepository.save(UserChatroomEntity.from(userChatroom)).getId();
+        UserChatroomEntity entity = UserChatroomEntity.builder()
+                .user(userJpaRepository.findById(userChatroom.getUser().getId())
+                        .orElseThrow(() -> new IllegalArgumentException("User not found")))
+                .chatroom(chatroomJpaRepository.findById(userChatroom.getChatroom().getId())
+                        .orElseThrow(() -> new IllegalArgumentException("Chatroom not found")))
+                .isOnline(userChatroom.getIsOnline())
+                .build();
+        return userChatroomJpaRepository.save(entity).getId();
     }
-
 
     @Override
     public Optional<UserChatroom> findByUserIdAndChatroomId(User user, Chatroom chatroom) {
-        return userChatroomJpaRepository.findByUserAndChatroomFetch(UserEntity.from(user), ChatroomEntity.from(chatroom))
+        UserEntity userEntity = userJpaRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        ChatroomEntity chatroomEntity = chatroomJpaRepository.findById(chatroom.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Chatroom not found"));
+
+        return userChatroomJpaRepository.findByUserAndChatroomFetch(userEntity, chatroomEntity)
                 .map(UserChatroomEntity::toModel);
     }
 
     @Override
     public List<UserChatroom> findChatroomListByUserId(User user) {
-        return userChatroomJpaRepository.findByUserWithFetch(UserEntity.from(user))
+        UserEntity userEntity = userJpaRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        return userChatroomJpaRepository.findByUserWithFetch(userEntity)
                 .stream()
                 .map(UserChatroomEntity::toModel)
                 .toList();
@@ -44,7 +60,10 @@ public class UserChatroomRepository implements UserChatroomPersistencePort {
 
     @Override
     public List<UserChatroom> findUserListByChatRoomId(Chatroom chatroom) {
-        return userChatroomJpaRepository.findByChatroomWithFetch(ChatroomEntity.from(chatroom))
+        ChatroomEntity chatroomEntity = chatroomJpaRepository.findById(chatroom.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Chatroom not found"));
+
+        return userChatroomJpaRepository.findByChatroomWithFetch(chatroomEntity)
                 .stream()
                 .map(UserChatroomEntity::toModel)
                 .toList();
@@ -52,7 +71,12 @@ public class UserChatroomRepository implements UserChatroomPersistencePort {
 
     @Override
     public boolean existsByUserIdAndChatRoomId(User user, Chatroom chatroom) {
-       return userChatroomJpaRepository.existsByUserAndChatRoom(UserEntity.from(user), ChatroomEntity.from(chatroom));
+        UserEntity userEntity = userJpaRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        ChatroomEntity chatroomEntity = chatroomJpaRepository.findById(chatroom.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Chatroom not found"));
+
+        return userChatroomJpaRepository.existsByUserAndChatRoom(userEntity, chatroomEntity);
     }
 
     @Override

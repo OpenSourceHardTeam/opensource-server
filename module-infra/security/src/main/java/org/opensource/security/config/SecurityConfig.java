@@ -68,7 +68,9 @@ public class SecurityConfig {
                                         "/error").permitAll()
                                 .requestMatchers(
                                         "/api/v1/book/**",
-                                        "/api/v1/vote/votes/**"
+                                        "/api/v1/vote/votes/**",
+                                        "/api/v1/chatroom/**",
+                                        "/api/v1/user-chatroom/**"
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )
