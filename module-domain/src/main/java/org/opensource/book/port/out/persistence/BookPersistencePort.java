@@ -9,4 +9,6 @@ public interface BookPersistencePort {
     List<Book> getAllBooks();
 
     Optional<Book> getBookById(Long id);
+
+    List<Book> getBookByTitle(String title);
 }
