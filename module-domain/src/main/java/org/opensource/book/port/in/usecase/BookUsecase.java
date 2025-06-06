@@ -8,4 +8,6 @@ public interface BookUsecase {
     List<Book> findAllBooks();
 
     Book findBookById(Long id);
+
+    List<Book> findBookByTitle(String title);
 }
