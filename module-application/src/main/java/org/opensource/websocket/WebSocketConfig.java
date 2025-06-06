@@ -21,6 +21,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry
                 .addHandler(webSocketChatHandler, "/ws-booking-messaging")
-                .setAllowedOrigins("*");
+                .setAllowedOrigins("*")
+                .addInterceptors(new WebSocketHandshakeInterceptor());
     }
 }

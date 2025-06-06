@@ -236,19 +236,18 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         }
     }
 
+
     private Map<String, String> extractRequiredParams(WebSocketSession session) throws IOException {
-        // 1. 먼저 헤더에서 시도 (기존 방식 - Postman 등 개발도구용)
+        // 1. 먼저 헤더에서 시도 (기존 방식 - Postman 등)
         String name = session.getHandshakeHeaders().getFirst("name");
         String userIdString = session.getHandshakeHeaders().getFirst("userId");
         String chatroomIdString = session.getHandshakeHeaders().getFirst("chatRoomId");
 
-        // 2. 헤더에 값이 없으면 쿼리 파라미터에서 시도 (브라우저용)
+        // 2. 헤더에 값이 없으면 세션 속성에서 시도 (쿼리 파라미터 - 브라우저용)
         if (name == null || userIdString == null || chatroomIdString == null) {
-            Map<String, String> queryParams = parseQueryParameters(session.getUri().getQuery());
-
-            name = name != null ? name : queryParams.get("name");
-            userIdString = userIdString != null ? userIdString : queryParams.get("userId");
-            chatroomIdString = chatroomIdString != null ? chatroomIdString : queryParams.get("chatRoomId");
+            name = name != null ? name : (String) session.getAttributes().get("name");
+            userIdString = userIdString != null ? userIdString : (String) session.getAttributes().get("userId");
+            chatroomIdString = chatroomIdString != null ? chatroomIdString : (String) session.getAttributes().get("chatRoomId");
         }
 
         // 3. 여전히 값이 없으면 에러
@@ -261,27 +260,6 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         params.put("name", name);
         params.put("userId", userIdString);
         params.put("chatroomId", chatroomIdString);
-        return params;
-    }
-
-    // 쿼리 파라미터 파싱 헬퍼 메서드
-    private Map<String, String> parseQueryParameters(String query) {
-        Map<String, String> params = new HashMap<>();
-        if (query != null && !query.isEmpty()) {
-            String[] pairs = query.split("&");
-            for (String pair : pairs) {
-                String[] keyValue = pair.split("=", 2);
-                if (keyValue.length == 2) {
-                    try {
-                        String key = java.net.URLDecoder.decode(keyValue[0], "UTF-8");
-                        String value = java.net.URLDecoder.decode(keyValue[1], "UTF-8");
-                        params.put(key, value);
-                    } catch (Exception e) {
-                        logger.warn("Failed to decode query parameter: {}", pair);
-                    }
-                }
-            }
-        }
         return params;
     }
 
