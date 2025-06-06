@@ -209,24 +209,24 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
 
     private UserInfo extractUserInfo(WebSocketSession session) {
         try {
-            // 모든 필수 헤더 한 번에 추출
-            Map<String, String> headers = extractRequiredHeaders(session);
-            if (headers == null) {
-                return null; // extractRequiredHeaders에서 이미 오류 메시지를 보냈음
+            // 헤더와 쿼리 파라미터에서 필수 값들 추출
+            Map<String, String> params = extractRequiredParams(session);
+            if (params == null) {
+                return null; // extractRequiredParams에서 이미 오류 메시지를 보냈음
             }
 
             // 숫자 값 파싱
-            Long userId = parseNumericId(session, headers.get("userId"), "userId");
-            Long chatroomId = parseNumericId(session, headers.get("chatroomId"), "chatroomId");
+            Long userId = parseNumericId(session, params.get("userId"), "userId");
+            Long chatroomId = parseNumericId(session, params.get("chatroomId"), "chatroomId");
 
             if (userId == null || chatroomId == null) {
                 return null; // parseNumericId에서 이미 오류 메시지를 보냈음
             }
 
-            return new UserInfo(headers.get("name"), userId, chatroomId, session);
+            return new UserInfo(params.get("name"), userId, chatroomId, session);
 
         } catch (Exception e) {
-            logger.error("WebSocket header processing failed", e);
+            logger.error("WebSocket parameter processing failed", e);
             try {
                 sendErrorAndClose(session, "Unexpected server error.");
             } catch (IOException ioe) {
@@ -236,21 +236,53 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         }
     }
 
-    private Map<String, String> extractRequiredHeaders(WebSocketSession session) throws IOException {
+    private Map<String, String> extractRequiredParams(WebSocketSession session) throws IOException {
+        // 1. 먼저 헤더에서 시도 (기존 방식 - Postman 등 개발도구용)
         String name = session.getHandshakeHeaders().getFirst("name");
         String userIdString = session.getHandshakeHeaders().getFirst("userId");
         String chatroomIdString = session.getHandshakeHeaders().getFirst("chatRoomId");
 
+        // 2. 헤더에 값이 없으면 쿼리 파라미터에서 시도 (브라우저용)
         if (name == null || userIdString == null || chatroomIdString == null) {
-            sendErrorAndClose(session, "Missing required headers.");
+            Map<String, String> queryParams = parseQueryParameters(session.getUri().getQuery());
+
+            name = name != null ? name : queryParams.get("name");
+            userIdString = userIdString != null ? userIdString : queryParams.get("userId");
+            chatroomIdString = chatroomIdString != null ? chatroomIdString : queryParams.get("chatRoomId");
+        }
+
+        // 3. 여전히 값이 없으면 에러
+        if (name == null || userIdString == null || chatroomIdString == null) {
+            sendErrorAndClose(session, "Missing required headers or query parameters (name, userId, chatRoomId).");
             return null;
         }
 
-        Map<String, String> headers = new HashMap<>();
-        headers.put("name", name);
-        headers.put("userId", userIdString);
-        headers.put("chatroomId", chatroomIdString);
-        return headers;
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+        params.put("userId", userIdString);
+        params.put("chatroomId", chatroomIdString);
+        return params;
+    }
+
+    // 쿼리 파라미터 파싱 헬퍼 메서드
+    private Map<String, String> parseQueryParameters(String query) {
+        Map<String, String> params = new HashMap<>();
+        if (query != null && !query.isEmpty()) {
+            String[] pairs = query.split("&");
+            for (String pair : pairs) {
+                String[] keyValue = pair.split("=", 2);
+                if (keyValue.length == 2) {
+                    try {
+                        String key = java.net.URLDecoder.decode(keyValue[0], "UTF-8");
+                        String value = java.net.URLDecoder.decode(keyValue[1], "UTF-8");
+                        params.put(key, value);
+                    } catch (Exception e) {
+                        logger.warn("Failed to decode query parameter: {}", pair);
+                    }
+                }
+            }
+        }
+        return params;
     }
 
     private Long parseNumericId(WebSocketSession session, String idString, String fieldName) throws IOException {
