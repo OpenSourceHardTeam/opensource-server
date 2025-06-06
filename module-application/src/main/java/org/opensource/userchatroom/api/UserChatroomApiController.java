@@ -48,9 +48,10 @@ public class UserChatroomApiController implements UserChatroomApi {
             @Valid @RequestBody JoinUserInChatroomRequest request) {
         Long userChatroomId = userChatroomFacade.joinUserInChatRoom(
                 request.getUserId(), request.getChatroomId(), true);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(new JoinUserInChatroomResponse(userChatroomId));
+//        return ResponseEntity
+//                .status(HttpStatus.CREATED)
+//                .body(new JoinUserInChatroomResponse(userChatroomId));
+        return ResponseEntity.ok(new JoinUserInChatroomResponse(userChatroomId));
     }
 
     @Operation(
