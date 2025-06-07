@@ -1,18 +1,14 @@
 package org.opensource.chatroom.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.opensource.book.domain.Book;
 import org.opensource.book.port.in.usecase.BookUsecase;
 import org.opensource.chatroom.domain.Chatroom;
-import org.opensource.chatroom.entity.ChatroomEntity;
 import org.opensource.chatroom.port.in.command.CreateChatroomCommand;
 import org.opensource.chatroom.port.in.usecase.ChatroomUpdateUsecase;
 import org.opensource.chatroom.port.in.usecase.ChatroomUsecase;
 
 import org.opensource.chatroom.port.out.persistence.ChatroomPersistencePort;
-import org.opensource.chatroom.repository.ChatroomJpaRepository;
-import org.opensource.chatroom.repository.ChatroomRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +21,6 @@ public class ChatroomService implements ChatroomUsecase, ChatroomUpdateUsecase {
 
     private final ChatroomPersistencePort chatroomPersistencePort;
     private final BookUsecase bookUsecase;
-    private final ChatroomJpaRepository chatroomJpaRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -49,14 +44,5 @@ public class ChatroomService implements ChatroomUsecase, ChatroomUpdateUsecase {
     @Override
     public void deleteById(Long chatroomId) {
         chatroomPersistencePort.deleteById(chatroomId);
-    }
-
-    @Override
-    @Transactional
-    public Chatroom updateTopic(Long id, String newTopic) {
-        ChatroomEntity entity = chatroomJpaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("채팅방을 찾을 수 없습니다. ID: " + id));
-        entity.updateTopic(newTopic);
-        return entity.toModel();
     }
 }
