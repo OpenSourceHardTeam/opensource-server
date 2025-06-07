@@ -93,10 +93,10 @@ public class SecurityConfig {
                         "https://bookingopen.netlify.app/")
         );
         configuration.setAllowCredentials(true);
-        configuration.setAllowedMethods(
-                Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD")
-        );
-//        configuration.addAllowedMethod("*");
+//        configuration.setAllowedMethods(
+//                Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD")
+//        );
+        configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.addExposedHeader("Authorization");
 
