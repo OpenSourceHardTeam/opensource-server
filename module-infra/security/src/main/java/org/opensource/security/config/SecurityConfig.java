@@ -21,6 +21,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.core.annotation.Order;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -92,7 +93,10 @@ public class SecurityConfig {
                         "https://bookingopen.netlify.app/")
         );
         configuration.setAllowCredentials(true);
-        configuration.addAllowedMethod("*");
+        configuration.setAllowedMethods(
+                Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD")
+        );
+//        configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.addExposedHeader("Authorization");
 
