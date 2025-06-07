@@ -9,6 +9,7 @@ import org.opensource.user.dto.request.SignInRequestDto;
 import org.opensource.user.dto.request.SignUpRequestDto;
 import org.opensource.user.dto.response.SignInResponseDto;
 import org.opensource.user.dto.response.SignUpResponseDto;
+import org.opensource.user.dto.response.UserInfoResponseDto;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,5 +34,9 @@ public interface UserApi {
             @LoginUserId Long id,
             @LoginUserEmail String email,
             ChangeUserInfoRequestDto request
+    );
+
+    ApiResponse<UserInfoResponseDto> findUserById(
+            @LoginUserId Long id
     );
 }
