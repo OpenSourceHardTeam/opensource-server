@@ -10,7 +10,8 @@ public enum UserSuccessType implements SuccessType {
     NAME_CAN_USE(200, "사용 가능한 이름입니다."),
     SIGN_IN_SUCCESS(200, "로그인에 성공하였습니다."),
     CHANGE_USER_NAME_SUCCESS(200, "사용자 이름을 변경하였습니다."),
-    CHANGE_USER_PASSWORD_SUCCESS(200, "사용자 비밀번호를 변경하였습니다.")
+    CHANGE_USER_PASSWORD_SUCCESS(200, "사용자 비밀번호를 변경하였습니다."),
+    GET_USER_INFORMATION_SUCCESS(200, "사용자 정보를 불러왔습니다.")
     ;
 
     private final int code;
