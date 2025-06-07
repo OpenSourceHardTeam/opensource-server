@@ -10,4 +10,6 @@ public interface ChatroomUsecase {
     Long createBy(CreateChatroomCommand command);
 
     void deleteById(Long chatroomId);
+
+    Chatroom updateTopic(Long id, String newTopic);
 }

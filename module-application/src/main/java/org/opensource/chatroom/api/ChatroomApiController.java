@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.opensource.chatroom.dto.request.PatchChatroomTopic;
 import org.opensource.common.CommonApiResult;
 import org.opensource.chatroom.domain.Chatroom;
 import org.opensource.chatroom.dto.request.CreateChatroomRequest;
@@ -58,6 +59,29 @@ public class ChatroomApiController implements ChatroomApi {
     ) {
         Chatroom chatroom = chatroomFacade.findChatroomById(id);
         return ResponseEntity.ok(new ChatroomResponse(chatroom.getTopic(), chatroom.getBook().getBookId()));
+    }
+
+    @Operation(
+            summary = "채팅방 토픽 수정",
+            description = "채팅방의 토픽을 수정합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "채팅방 수정 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청 데이터"),
+            @ApiResponse(responseCode = "404", description = "채팅방을 찾을 수 없음")
+    })
+    @PatchMapping("/{id}")
+    public ResponseEntity<ChatroomResponse> updateChatroom(
+            @Parameter(description = "채팅방 ID", required = true, example = "1")
+            @PathVariable Long id,
+            @Parameter(description = "채팅방 토픽 수정 요청", required = true)
+            @Valid @RequestBody PatchChatroomTopic request
+    ) {
+        Chatroom chatroom = chatroomFacade.updateChatroomTopic(id, request.getTopic());
+        return ResponseEntity.ok(new ChatroomResponse(
+                chatroom.getTopic(),
+                chatroom.getBook().getBookId()
+        ));
     }
 
     @Operation(

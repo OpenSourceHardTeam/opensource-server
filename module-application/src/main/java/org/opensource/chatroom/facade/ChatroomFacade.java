@@ -33,4 +33,8 @@ public class ChatroomFacade {
     public void deleteChatroom(Long id) {
         chatroomUsecase.deleteById(id);
     }
+
+    public Chatroom updateChatroomTopic(Long id, String newTopic) {
+        return chatroomUsecase.updateTopic(id, newTopic);
+    }
 }

@@ -48,8 +48,12 @@ public class ChatroomEntity extends BaseTimeEntity {
     public Chatroom toModel() {
         return Chatroom.builder()
                 .id(this.id)
-                .topic(topic)
+                .topic(this.topic)
                 .book(this.book.toModel())
                 .build();
+    }
+
+    public void updateTopic(String newTopic) {
+        this.topic = newTopic;
     }
 }
