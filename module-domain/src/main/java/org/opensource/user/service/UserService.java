@@ -96,6 +96,7 @@ public class UserService implements UserUseCase {
         return user;
     }
 
+    @Override
     public void changeUserInformation(Long id, String email, String newName, String newPassword) {
         System.out.println("newName: " + newName);
         System.out.println("newPassword: " + newPassword);

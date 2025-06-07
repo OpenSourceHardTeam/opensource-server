@@ -7,11 +7,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.opensource.user.annotation.LoginUserEmail;
 import org.opensource.user.annotation.LoginUserId;
+import org.opensource.user.domain.User;
 import org.opensource.user.dto.request.ChangeUserInfoRequestDto;
 import org.opensource.user.dto.request.SignInRequestDto;
 import org.opensource.user.dto.request.SignUpRequestDto;
 import org.opensource.user.dto.response.SignInResponseDto;
 import org.opensource.user.dto.response.SignUpResponseDto;
+import org.opensource.user.dto.response.UserInfoResponseDto;
 import org.opensource.user.facade.UserFacade;
 import org.springframework.web.bind.annotation.*;
 import type.user.UserSuccessType;
@@ -64,11 +66,21 @@ public class UserController implements UserApi {
 
     @Override
     @PatchMapping("/change-userinfo")
+    @Operation(summary = "유저 정보 변경 API", description = "유저의 정보를 변경합니다.")
     public ApiResponse changeUserInformation(
             @LoginUserId Long id,
             @LoginUserEmail String email,
             @RequestBody ChangeUserInfoRequestDto request) {
         userFacade.changeUserInformation(id, email, request.getNewName(), request.getNewPassword());
         return ApiResponse.success(UserSuccessType.CHANGE_USER_NAME_SUCCESS);
+    }
+
+    @Override
+    @GetMapping("/get-user-info")
+    @Operation(summary = "유저 정보 조회 API", description = "유저의 정보를 불러옵니다.")
+    public ApiResponse<UserInfoResponseDto> findUserById(
+            @LoginUserId Long id) {
+        UserInfoResponseDto user = UserInfoResponseDto.of(userFacade.findUser(id));
+        return ApiResponse.success(UserSuccessType.GET_USER_INFORMATION_SUCCESS, user);
     }
 }
