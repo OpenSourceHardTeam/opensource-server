@@ -6,4 +6,6 @@ public interface VoteUserUsecase {
     void voteUser(VoteCommand voteCommand);
 
     Boolean userAnswered(Long userId, Long voteId);
+
+    void deleteVoteUserByVoteId(Long voteId);
 }

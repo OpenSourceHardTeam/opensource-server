@@ -10,4 +10,6 @@ public interface VoteUserJpaRepository extends JpaRepository<VoteUserEntity, Lon
     Optional<VoteUserEntity> findByUserIdAndVote_VoteId(Long userId, Long voteId);
 
     Boolean existsByUserIdAndVote_VoteId(Long userId, Long voteId);
+
+    void deleteByVote_VoteId(Long voteId);
 }

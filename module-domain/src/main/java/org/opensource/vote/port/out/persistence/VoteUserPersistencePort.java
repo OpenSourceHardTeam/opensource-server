@@ -12,4 +12,6 @@ public interface VoteUserPersistencePort {
     Optional<VoteUser> findUserVotedByUserIdAndVoteId(Long userId, Long voteId);
 
     Boolean isUserVotedByUserIdAndVoteId(Long userId, Long voteId);
+
+    void deleteUserVotedByVoteId(Long voteId);
 }

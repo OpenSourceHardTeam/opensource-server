@@ -18,4 +18,6 @@ public interface VoteUsecase {
     List<Vote> findAllByCreatedAt();
 
     List<Vote> findAllByVoteCount();
+
+    void deleteVoteByVoteId(Long userId, Long voteId);
 }

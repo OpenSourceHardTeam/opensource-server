@@ -12,8 +12,8 @@ public class VoteMapper {
     }
 
     public static AddVoteCommand toAddVoteCommand(
-            Long bookId, String title, String content
+            Long bookId, Long userId, String title, String content
     ) {
-        return new AddVoteCommand(bookId, title, content);
+        return new AddVoteCommand(bookId, userId, title, content);
     }
 }

@@ -4,6 +4,8 @@ import exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.opensource.book.domain.Book;
 import org.opensource.book.port.out.persistence.BookPersistencePort;
+import org.opensource.user.domain.User;
+import org.opensource.user.port.out.persistence.UserPersistencePort;
 import org.opensource.vote.domain.Vote;
 import org.opensource.vote.domain.VoteUser;
 import org.opensource.vote.port.in.command.AddVoteCommand;
@@ -14,9 +16,12 @@ import org.opensource.vote.port.out.persistence.VoteUserPersistencePort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import type.user.BookErrorType;
+import type.user.UserErrorType;
+import type.user.UserSuccessType;
 import type.user.VoteErrorType;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +29,7 @@ public class VoteService implements VoteUsecase {
     private final VotePersistencePort votePersistencePort;
     private final VoteUserPersistencePort voteUserPersistencePort;
     private final BookPersistencePort bookPersistencePort;
+    private final UserPersistencePort userPersistencePort;
 
     @Override
     @Transactional
@@ -59,8 +65,12 @@ public class VoteService implements VoteUsecase {
         Book book = bookPersistencePort.getBookById(command.bookId())
                 .orElseThrow(() -> new BadRequestException(BookErrorType.GET_BOOK_INFO_ERROR));
 
+        User user = userPersistencePort.findById(command.userId())
+                .orElseThrow(() -> new BadRequestException(UserErrorType.USER_NOT_EXIST));
+
         Vote vote = Vote.builder()
                 .book(book)
+                .user(user)
                 .title(command.title())
                 .content(command.content())
                 .agreeCount(0)
@@ -89,5 +99,16 @@ public class VoteService implements VoteUsecase {
     @Override
     public List<Vote> findAllByVoteCount() {
         return votePersistencePort.findAllByVoteCount();
+    }
+
+    @Override
+    public void deleteVoteByVoteId(Long userId, Long voteId) {
+        Vote vote = votePersistencePort.findByVoteId(voteId)
+                        .orElseThrow(() -> new BadRequestException(VoteErrorType.VOTE_NOT_EXIST));
+        if(Objects.equals(vote.getUser().getId(), userId)) {
+            votePersistencePort.deleteByVoteId(voteId);
+        } else {
+            throw new BadRequestException(VoteErrorType.DELETE_VOTE_EXIST);
+        }
     }
 }

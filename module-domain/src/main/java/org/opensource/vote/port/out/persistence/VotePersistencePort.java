@@ -20,4 +20,6 @@ public interface VotePersistencePort {
     List<Vote> findAllByCreatedAt();
 
     List<Vote> findAllByVoteCount();
+
+    void deleteByVoteId(Long voteId);
 }

@@ -60,4 +60,9 @@ public class VoteRepository implements VotePersistencePort {
                 .map(VoteEntity::toModel)
                 .toList();
     }
+
+    @Override
+    public void deleteByVoteId(Long voteId) {
+        voteJpaRepository.deleteById(voteId);
+    }
 }

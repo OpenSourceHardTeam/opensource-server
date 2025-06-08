@@ -21,8 +21,8 @@ public class VoteFacade {
     private final VoteUsecase voteUsecase;
     private final VoteUserUsecase voteUserUsecase;
 
-    public void addVote(AddVoteRequestDto requestDto) {
-        voteUsecase.addVote(VoteMapper.toAddVoteCommand(requestDto.getBookId(), requestDto.getTitle(), requestDto.getContent()));
+    public void addVote(Long userId, AddVoteRequestDto requestDto) {
+        voteUsecase.addVote(VoteMapper.toAddVoteCommand(requestDto.getBookId(), userId, requestDto.getTitle(), requestDto.getContent()));
     }
 
     public void vote(Long userId, VoteRequestDto requestDto) {
@@ -48,5 +48,10 @@ public class VoteFacade {
 
     public Boolean getVoteAnswered(Long userId, Long voteId) {
         return voteUserUsecase.userAnswered(userId, voteId);
+    }
+
+    public void deleteVote(Long userId, Long voteId) {
+        voteUserUsecase.deleteVoteUserByVoteId(voteId);
+        voteUsecase.deleteVoteByVoteId(userId, voteId);
     }
 }
