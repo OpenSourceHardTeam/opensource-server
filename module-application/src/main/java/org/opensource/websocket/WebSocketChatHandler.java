@@ -210,7 +210,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
     private UserInfo extractUserInfo(WebSocketSession session) {
         try {
             // 헤더와 쿼리 파라미터에서 필수 값들 추출
-            Map<String, String> params = extractRequiredHeaders(session);
+            Map<String, String> params = extractRequiredParams(session);
             if (params == null) {
                 return null; // extractRequiredParams에서 이미 오류 메시지를 보냈음
             }
@@ -237,14 +237,17 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
     }
 
 
-    private Map<String, String> extractRequiredHeaders(WebSocketSession session) throws IOException {
+    private Map<String, String> extractRequiredParams(WebSocketSession session) throws IOException {
+        // 1. 먼저 헤더에서 시도 (기존 방식 - Postman 등)
         String name = session.getHandshakeHeaders().getFirst("name");
         String userIdString = session.getHandshakeHeaders().getFirst("userId");
         String chatroomIdString = session.getHandshakeHeaders().getFirst("chatRoomId");
 
+        // 2. 헤더에 값이 없으면 세션 속성에서 시도 (쿼리 파라미터 - 브라우저용)
         if (name == null || userIdString == null || chatroomIdString == null) {
-            sendErrorAndClose(session, "Missing required headers.");
-            return null;
+            name = name != null ? name : (String) session.getAttributes().get("name");
+            userIdString = userIdString != null ? userIdString : (String) session.getAttributes().get("userId");
+            chatroomIdString = chatroomIdString != null ? chatroomIdString : (String) session.getAttributes().get("chatRoomId");
         }
 
         Map<String, String> headers = new HashMap<>();
