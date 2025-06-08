@@ -59,4 +59,9 @@ public class VoteUserService implements VoteUserUsecase {
             return voteUser.getAnswered();
         }
     }
+
+    @Override
+    public void deleteVoteUserByVoteId(Long voteId) {
+        voteUserPersistencePort.deleteUserVotedByVoteId(voteId);
+    }
 }

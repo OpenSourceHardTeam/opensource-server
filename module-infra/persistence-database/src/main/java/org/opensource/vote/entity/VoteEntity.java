@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.opensource.basetime.BaseTimeEntity;
 import org.opensource.book.entity.BookEntity;
+import org.opensource.user.entity.UserEntity;
 import org.opensource.vote.domain.Vote;
 
 @Entity
@@ -18,6 +19,10 @@ public class VoteEntity extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
     private BookEntity book;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
     @Column(name = "title")
     private String title;
@@ -38,6 +43,7 @@ public class VoteEntity extends BaseTimeEntity {
     public VoteEntity(
             Long voteId,
             BookEntity book,
+            UserEntity user,
             String title,
             String content,
             int agreeCount,
@@ -45,6 +51,7 @@ public class VoteEntity extends BaseTimeEntity {
             int voteCount) {
         this.voteId = voteId;
         this.book = book;
+        this.user = user;
         this.title = title;
         this.content = content;
         this.agreeCount = agreeCount;
@@ -56,6 +63,7 @@ public class VoteEntity extends BaseTimeEntity {
         return builder()
                 .voteId(vote.getId())
                 .book(BookEntity.from(vote.getBook()))
+                .user(UserEntity.from(vote.getUser()))
                 .title(vote.getTitle())
                 .content(vote.getTitle())
                 .content(vote.getContent())
@@ -69,6 +77,7 @@ public class VoteEntity extends BaseTimeEntity {
         return Vote.builder()
                 .id(this.voteId)
                 .book(this.book.toModel())
+                .user(this.user.toModel())
                 .title(this.title)
                 .content(this.content)
                 .agreeCount(this.agreeCount)

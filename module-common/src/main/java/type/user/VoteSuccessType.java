@@ -8,7 +8,8 @@ public enum VoteSuccessType implements SuccessType {
     CHANGE_VOTE_ANSWERED_SUCCESS(200, "투표를 변경하였습니다."),
     GET_VOTE_ANSWERED_SUCCESS(200, "유저의 투표 내용입니다."),
     GET_ALL_BOOK_VOTE_SUCCESS(200, "책의 모든 투표 리스트를 불러왔습니다."),
-    GET_ALL_VOTE_SUCCESS(200, "모든 투표 리스트를 불러왔습니다.");
+    GET_ALL_VOTE_SUCCESS(200, "모든 투표 리스트를 불러왔습니다."),
+    DELETE_VOTE_SUCCESS(200, "투표를 삭제하였습니다.");
 
     private final int code;
     private final String message;

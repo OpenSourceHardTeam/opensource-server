@@ -8,7 +8,7 @@ import org.opensource.vote.dto.response.GetVoteResponseDto;
 import java.util.List;
 
 public interface VoteApi {
-    ApiResponse addVote(AddVoteRequestDto addVoteRequestDto);
+    ApiResponse addVote(Long userId, AddVoteRequestDto addVoteRequestDto);
 
     ApiResponse vote(Long userId, VoteRequestDto voteRequestDto);
 
@@ -17,4 +17,6 @@ public interface VoteApi {
     ApiResponse<List<GetVoteResponseDto>> getAllByBookId(Long bookId, String sortBy);
 
     ApiResponse<Boolean> getVoteAnswered(Long userId, Long voteId);
+
+    ApiResponse deleteVote(Long userId, Long voteId);
 }

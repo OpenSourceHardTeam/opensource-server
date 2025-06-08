@@ -1,4 +1,4 @@
 package org.opensource.vote.port.in.command;
 
-public record AddVoteCommand(Long bookId, String title, String content) {
+public record AddVoteCommand(Long bookId, Long userId, String title, String content) {
 }

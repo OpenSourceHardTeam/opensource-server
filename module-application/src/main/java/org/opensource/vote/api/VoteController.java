@@ -28,8 +28,9 @@ public class VoteController implements VoteApi {
     @PostMapping("/add-vote")
     @Operation(summary = "투표 등록 API", description = "사용자가 투표를 등록합니다.")
     public ApiResponse addVote(
+            @LoginUserId Long userId,
             @RequestBody @Valid AddVoteRequestDto addVoteRequestDto) {
-        voteFacade.addVote(addVoteRequestDto);
+        voteFacade.addVote(userId, addVoteRequestDto);
         return ApiResponse.success(VoteSuccessType.ADD_VOTE_SUCCESS);
     }
 
@@ -76,5 +77,15 @@ public class VoteController implements VoteApi {
             @LoginUserId Long userId,
             @RequestParam Long voteId) {
         return ApiResponse.success(VoteSuccessType.GET_VOTE_ANSWERED_SUCCESS, voteFacade.getVoteAnswered(userId, voteId));
+    }
+
+    @Override
+    @DeleteMapping("/delete-vote")
+    @Operation(summary = "투표 삭제 API", description = "투표를 삭제합니다.")
+    public ApiResponse deleteVote(
+            @LoginUserId Long userId,
+            @RequestParam Long voteId) {
+        voteFacade.deleteVote(userId, voteId);
+        return ApiResponse.success(VoteSuccessType.DELETE_VOTE_SUCCESS);
     }
 }

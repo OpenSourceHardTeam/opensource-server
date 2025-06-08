@@ -35,4 +35,9 @@ public class VoteUserRepository implements VoteUserPersistencePort {
     public Boolean isUserVotedByUserIdAndVoteId(Long userId, Long voteId) {
         return voteUserJpaRepository.existsByUserIdAndVote_VoteId(userId, voteId);
     }
+
+    @Override
+    public void deleteUserVotedByVoteId(Long voteId) {
+        voteUserJpaRepository.deleteByVote_VoteId(voteId);
+    }
 }

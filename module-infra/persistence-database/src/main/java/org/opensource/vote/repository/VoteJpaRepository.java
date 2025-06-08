@@ -18,4 +18,6 @@ public interface VoteJpaRepository extends JpaRepository<VoteEntity, Long> {
     List<VoteEntity> findAllByOrderByVoteCountDesc();
 
     Long book(BookEntity book);
+
+    void deleteByVoteId(Long voteId);
 }
