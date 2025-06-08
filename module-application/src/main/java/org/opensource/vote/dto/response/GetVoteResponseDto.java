@@ -9,6 +9,7 @@ import org.opensource.vote.domain.Vote;
 public class GetVoteResponseDto {
     private Long voteId;
     private Long bookId;
+    private Long userId;
     private String bookImageUrl;
     private String title;
     private String content;
@@ -20,6 +21,7 @@ public class GetVoteResponseDto {
         return new GetVoteResponseDto(
                 vote.getId(),
                 vote.getBook().getBookId(),
+                vote.getUser().getId(),
                 vote.getBook().getBookImageUrl(),
                 vote.getTitle(),
                 vote.getContent(),
