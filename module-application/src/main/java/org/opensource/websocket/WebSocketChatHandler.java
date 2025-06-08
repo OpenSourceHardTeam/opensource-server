@@ -44,7 +44,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
 
         if (userInfo != null) {
             addUserToChatRoom(userInfo);
-            notifyUserJoined(userInfo);
+//            notifyUserJoined(userInfo);
         }
     }
 
@@ -125,7 +125,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
 
         if (userInfo != null) {
             removeUserFromChatRoom(userInfo);
-            notifyUserLeft(userInfo);
+//            notifyUserLeft(userInfo);
         }
 
         super.afterConnectionClosed(session, status);
